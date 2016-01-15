@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-8">
+        <form action="" class="form-horizontal" method="post">
+            {{ form.csrf_token }}
+
+            <fieldset id="service_profile_fieldset">
+                <div class="form-group">
+                    <label class="col-sm-2 " for="node_id">Node ID</label>
+                    <div class="col-sm-10">
+                        {{ form.node_id(class="form-control", id='node_id', placeholder=form.node_id.label.text,
+                        value=button.node_id or '') }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 " for="service">服务</label>
+                    <div class="col-sm-10">
+                        {{ form.service(class="form-control", id='service') }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 " for="customer">顾客</label>
+                    <div class="col-sm-10">
+                        {{ form.customer(class="form-control", id='customer') }}
+                    </div>
+                </div>
+
+                     <div class="right">
+                    <button type="submit" class="btn btn-primary" role="button">保存</button>
+                </div>
+            </fieldset>
+            </form>
+            {% if button.node_id %}
+            <form class="inline-form" method="post" action="{{ url_for('user.delete_button', node_id=button.node_id) }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                <button class="btn btn-danger">删除</button>
+             </form>
+            {% endif%}
+
+
+
+
+    </div>
+
+</div>
+
+{% endblock %}

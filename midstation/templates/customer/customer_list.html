@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block content %}
+
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading"> <h3>顾客</h3></div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>名字</th>
+                        <th>手机</th>
+                        <th>地址</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for customer in customers %}
+                    <tr>
+                        <td><a href="{{ url_for('customer.customer_profile', customer_id = customer.id) }}">{{ customer.name }}</a></td>
+                        <td>{{ customer.mobile_phone }}</td>
+                        <td>{{ customer.addr }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+                </table>
+                </div>
+
+            </div>
+            </div>
+        </div>
+        <div class="row">
+            <a href="{{ url_for('customer.customer_profile', customer_id=0)}}" class=""><button class="btn btn-primary">添加客户</button></a>
+        </div>
+
+
+{% endblock %}

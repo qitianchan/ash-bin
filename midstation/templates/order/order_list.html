@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block content %}
+
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading"> <h3>订单</h3></div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>订单编号</th>
+                        <th>订单内容</th>
+                        <th>订单时间</th>
+                        <th>价格</th>
+                        <th>客户</th>
+                        <th>电话</th>
+                        <th>地址</th>
+                        <th>状态</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in order_datas %}
+                    <tr>
+                        <td>{{ data.get('order_id') }}</td>
+                        <td>{{ data.get('service') }}</td>
+                        <td>{{ data.get('create_time') }}</td>
+                        <td>{{ data.get('price') }}</td>
+                        <td>{{ data.get('customer') }}</td>
+                      <td>{{ data.get('phone')}}</td>
+                      <td>{{ data.get('address') }}</td>
+                        <td>{{ data.get('status') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+                </table>
+                </div>
+
+            </div>
+            </div>
+        </div>
+          <!-- 分頁-->
+          {{ pagination.links }}
+{% endblock %}
