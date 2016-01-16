@@ -7,9 +7,10 @@ class GarbageCan(db.Model):
     __tablename__ = 'garbage_can'
     id = db.Column(db.Integer, primary_key=True)
     type = db.Column(db.String(64), nullable=False)
-    height = db.Column(db.Integer, nullable=False)
+    bottom_height = db.Column(db.Integer, nullable=False)               # 探头距离底部高度
+    top_height = db.Column(db.Integer, nullable=False)                  # 探头距离垃圾桶边沿高度
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-
+    device_id = db.Column(db.Integer, db.ForeignKey('device.id'))
 
     def __init__(self, type, height):
         self.type = type

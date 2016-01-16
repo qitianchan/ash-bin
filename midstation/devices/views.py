@@ -48,7 +48,6 @@ def devices_list():
         abort(404)
 
 
-
 # # 修改或添加顾客信息
 @devices.route('/device_profile/<device_id>', methods=['GET', 'POST'])
 @login_required
@@ -73,7 +72,18 @@ def device_profile(device_id):
         return redirect(url_for('devices.devices_list'))
 
     return render_template('devices/device_profile.html', form=form, device=device)
-#
+
+@devices.route('/devices/<id>/data', methods=['GET', 'POST'])
+@login_required
+def device_profile_data(id):
+    device = Device.get(id)
+
+    if device:
+        datas = device.datas
+
+        render_template('devices/device_data.html', datas=datas, device=device)
+
+
 # @devices.route('/devices/<id>/delete', methods=['GET', 'POST'])
 # @login_required
 # def delete_devices(id):

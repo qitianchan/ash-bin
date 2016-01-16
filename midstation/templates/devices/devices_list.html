@@ -22,7 +22,7 @@
                     {% for device in devices_datas %}
                     <tr>
 
-                        <td><a href="{{ url_for('devices.device_profile', device_id = device.device_id) }}">{{ device.mac }}</a></td>
+                        <td><a href="{{ url_for('devices.device_profile_data', device_id = device.device_id) }}">{{ device.mac }}</a></td>
                         <td>{{ device.eui }}</td>
                         <td>{{ device.garbage_can }}</td>
                         <td>{{ device.occupancy }}</td>

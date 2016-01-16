@@ -12,13 +12,15 @@ class Device(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     mac = db.Column(db.String(120), nullable=False)
     eui = db.Column(db.String(120), nullable=False)
-    garbage_can_id = db.Column(db.Integer, db.ForeignKey('garbage_can.id'))
+    # garbage_can_id = db.Column(db.Integer, db.ForeignKey('garbage_can.id'))
     garbage_can = db.Column(db.String(64))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    occupancy = db.Column(db.Integer, default=0)           # 垃圾占用率
-    temperature = db.Column(db.Integer)         # 温度
-    electric_level = db.Column(db.Integer)      # 电量等级
+    occupancy = db.Column(db.Integer, default=0)            # 垃圾占用率
+    temperature = db.Column(db.Integer)                     # 温度
+    electric_level = db.Column(db.Integer)                  # 电量等级
 
+    # one-to-one
+    garbage_can_obj = db.relationship('GarbageCan', backref='device', uselist=False)
 
     # one-to-many
     datas = db.relationship('Data', backref='device', primaryjoin="Data.device_id == Device.id")
@@ -66,6 +68,11 @@ class Device(db.Model):
         except SQLAlchemyError, e:
             db.session.rollback()
             raise e
+
+    @classmethod
+    def get(cls, id):
+        return cls.query.filter(cls.id == id, cls.user_id == current_user.id).first()
+
 
     @classmethod
     def devices_count(cls):
