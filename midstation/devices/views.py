@@ -6,60 +6,87 @@ from jinja2 import TemplateNotFound
 from midstation.user.models import User, Service, Customer
 from midstation.customer.forms import CustomerProfileForm
 from sqlalchemy.exc import IntegrityError
-
-
+from midstation.devices.models import Device
+from flask_paginate import Pagination
+from .forms import DeviceProfileForm
 devices = Blueprint('devices', __name__, template_folder='templates')
+from .models import get_garbage_can_choice
 
-# services list
 @devices.route('/devices_list')
 @login_required
 def devices_list():
     try:
-        devices = current_user.devices
-        return render_template('devices/devices_list.html', devices=devices)
+        search = False
+        q = request.args.get('q')
+        if q:
+            search = True
+        try:
+            page = int(request.args.get('page', 1))
+        except ValueError:
+            page = 1
+
+        devices_count = Device.devices_count()
+        pagination = Pagination(page=page, per_page=15, total=devices_count, css_framework='bootstrap3',
+                                search=search, record_name='devices')
+
+        devices_datas = []
+
+        devices = Device.get_devices(current_user, page, per_page=15)
+        for o in devices:
+            data = {}
+            data['device_id'] = o.id
+            data['mac'] = o.mac
+            data['eui'] = o.eui
+            data['garbage_can'] = o.garbage_can
+            data['occupancy'] = o.occupancy
+            data['temperature'] = o.temperature
+            data['electric_level'] = o.electric_level
+            devices_datas.append(data)
+
+        return render_template('devices/devices_list.html', devices_datas=devices_datas, pagination=pagination)
     except TemplateNotFound:
         abort(404)
 
 
-# 修改或添加顾客信息
-@devices.route('/devices_profile/<devices_id>', methods=['GET', 'POST'])
+
+# # 修改或添加顾客信息
+@devices.route('/device_profile/<device_id>', methods=['GET', 'POST'])
 @login_required
-def devices_profile(devices_id):
+def device_profile(device_id):
 
     # 如果 devices_id == '0',则是新增客户
-    if devices_id == '0':
-        cust = devices()
+    if device_id == '0':
+        device = Device()
     else:
-        cust = devices.query.filter_by(id=devices_id).first()
+        device = Device.query.filter_by(id=device_id).first()
 
-    if cust is None:
-        cust = devices()
+    if device is None:
+        device = Device()
 
-    form = devicesProfileForm(request.form, address=cust.addr or '')
+    form = DeviceProfileForm(request.form)
+    if current_user:
+            form.garbage_can.choices = get_garbage_can_choice()
 
     if request.method == 'POST' and form.validate_on_submit():
-        form.save_form(cust)
+        form.save_form(device)
         flash(u'保存成功', category='success')
         return redirect(url_for('devices.devices_list'))
 
-    devicess = current_user.devicess
-
-    return render_template('devices/devices_profile.html', form=form, devices=cust)
-
-
-@devices.route('/devices/<id>/delete', methods=['GET', 'POST'])
-@login_required
-def delete_devices(id):
-    devices = devices.get(id)
-    if devices is None:
-        flash(u'不存在该客人', category='danger')
-        return redirect(url_for('devices.devices_list'))
-
-    try:
-        devices.delete()
-    except IntegrityError:
-        flash(u'删除失败，存在引用到该服务的记录', 'danger')
-    except Exception:
-        flash(u'删除失败', category='danger')
-
-    return redirect(url_for('devices.devices_list'))
+    return render_template('devices/device_profile.html', form=form, device=device)
+#
+# @devices.route('/devices/<id>/delete', methods=['GET', 'POST'])
+# @login_required
+# def delete_devices(id):
+#     devices = devices.get(id)
+#     if devices is None:
+#         flash(u'不存在该客人', category='danger')
+#         return redirect(url_for('devices.devices_list'))
+#
+#     try:
+#         devices.delete()
+#     except IntegrityError:
+#         flash(u'删除失败，存在引用到该服务的记录', 'danger')
+#     except Exception:
+#         flash(u'删除失败', category='danger')
+#
+#     return redirect(url_for('devices.devices_list'))

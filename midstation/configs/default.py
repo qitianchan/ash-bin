@@ -92,6 +92,7 @@ class DefaultConfig(object):
     SERVICE_URL_PREFIX = '/service'
     CUSTOMER_URL_PREFIX = '/customer'
     ORDER_URL_PREFIX = '/order'
+    DEVICES_URL_PREFIX = '/devices'
 
     # Smart Button
     GATEWAY_ID = 'a2d790e1-1670-1217-0000-000db93db700'
@@ -111,4 +112,6 @@ class DefaultConfig(object):
     WTF_CSRF_ENABLED = True
     WTF_CSRF_SECRET_KEY = "reallyhardtoguess"
 
+    # Pagination
+    PER_PAGE = 15
 

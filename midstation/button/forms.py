@@ -18,7 +18,7 @@ class ButtonForm(Form):
 
     def save_form(self, button):
         button.node_id = self.node_id.data
-        service_id =  int(self.service.data)
+        service_id = int(self.service.data)
         if service_id > 0:
             button.service_id = service_id
 

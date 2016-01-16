@@ -19,7 +19,7 @@ manager = Manager(app)
 
 
 # Run local server
-manager.add_command("runserver", Server("localhost", port=8765))
+manager.add_command("runserver", Server("localhost", port=8099))
 
 
 @manager.command
@@ -38,3 +38,5 @@ def dropdb():
 
 if __name__ == "__main__":
     manager.run()
+    # db.drop_all(app=app)
+    # db.create_all(app=app)

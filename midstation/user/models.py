@@ -22,6 +22,18 @@ class User(db.Model):
     address = db.Column(db.String(200))
 
     # One-to-many
+    devices = db.relationship("Device", backref="user",
+                              lazy='dynamic',
+                              primaryjoin="Device.user_id == User.id",
+                              cascade='all, delete-orphan'
+                              )
+
+    # One-to-many
+    garbage_cans = db.relationship("GarbageCan", backref="user",
+                              primaryjoin="GarbageCan.user_id == User.id",
+                              cascade='all, delete-orphan'
+                              )
+    # One-to-many
     buttons = db.relationship("Button", backref="user",
                               primaryjoin="Button.user_id == User.id",
                               cascade='all, delete-orphan'

@@ -6,23 +6,14 @@ from midstation.extensions import db
 class GarbageCan(db.Model):
     __tablename__ = 'garbage_can'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), nullable=False)
-    wechat_template_id = db.Column(db.String(60))
-    wechat_template = db.Column(db.String(500))                                                 # 微信模板内容
-    count = db.Column(db.Integer, default=1)                                                    # 数量
-    unit = db.Column(db.String(6), default=u'桶')                                                # 单位
+    type = db.Column(db.String(64), nullable=False)
+    height = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
-    # One-to-Many
-    buttons = db.relationship('Button', backref='service',
-                              primaryjoin='Button.service_id == Service.id')
 
-    # One-to-Many
-    orders = db.relationship('Order', backref='service',
-                             primaryjoin='Order.service_id == Service.id')
-
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, type, height):
+        self.type = type
+        self.height = height
 
     def __repr__(self):
         """Set to a unique key specific to the object in the database.
@@ -30,14 +21,12 @@ class GarbageCan(db.Model):
         """
         return "<{} {}>".format(self.__class__.__name__, self.id)
 
-    def save(self, user=None):
+    def save(self):
         """
 
         :param user:
         :return:
         """
-        if user:
-            self.user_id = user.id
         db.session.add(self)
         db.session.commit()
         return self
@@ -49,3 +38,7 @@ class GarbageCan(db.Model):
         """
         db.session.delete(self)
         db.session.commit()
+
+    @classmethod
+    def get(cls, id):
+        return cls.query.filter(GarbageCan.id == id).first()

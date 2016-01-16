@@ -6,12 +6,6 @@ from jinja2 import TemplateNotFound
 from midstation.user.models import User
 from midstation.user.models import Button
 from flask_login import login_required, current_user
-from midstation.user.forms import UserInfoForm, AuthWechatForm
-from midstation.button.forms import ButtonForm
-from midstation.user.models import Service, Customer
-from midstation.utils.tools import get_service_choice, get_customer_choice
-from midstation.extensions import db
-from sqlalchemy.exc import IntegrityError
 from midstation.order.models import Order
 from flask_login import current_user
 from flask_paginate import Pagination

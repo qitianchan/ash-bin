@@ -25,6 +25,3 @@ from relationship_test import Post, Category
 # db.session.add(p)
 # db.session.commit()
 
-redis = Category('redis')
-print redis.posts
-print redis.posts.all()

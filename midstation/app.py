@@ -10,11 +10,15 @@ from midstation.wechat.views import wechat
 from midstation.utils.scrape_backend_v3 import detect_button_events
 from extensions import login_manager
 from midstation.user.models import User, Button
+from midstation.devices.models import Device
+from midstation.gdata.models import Data
+from midstation.garbage_cans.model import GarbageCan
 from midstation.service.views import service
 from midstation.extensions import csrf, redis_store, admin, db
 from flask_admin.contrib.sqla import ModelView
 from wtforms.fields import SelectField
 from midstation.order.views import order
+from midstation.devices.views import devices
 
 def create_app(config=None):
     """Creates the app."""
@@ -47,6 +51,7 @@ def configure_blueprint(app):
     app.register_blueprint(service, url_prefix=app.config['SERVICE_URL_PREFIX'])
     app.register_blueprint(customer, url_prefix=app.config['CUSTOMER_URL_PREFIX'])
     app.register_blueprint(order, url_prefix=app.config['ORDER_URL_PREFIX'])
+    app.register_blueprint(devices, url_prefix=app.config['DEVICES_URL_PREFIX'])
     # app.register_blueprint(wechat, url_prefix=app.config['WECHAT_URL_PREFIX'])
 
 
