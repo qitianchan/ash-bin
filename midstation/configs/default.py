@@ -33,9 +33,11 @@ class DefaultConfig(object):
     ERROR_LOG = "error.log"
 
     # Default Database
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + _basedir + '/' + \
-                              'test.sqlite'
+    DATABASE_PATH = _basedir + '/' + 'test.sqlite'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + DATABASE_PATH
 
+    # SQLALCHEMY_DATABASE_URI = 'sqlite:///' + _basedir + '/' + \
+    #                           'test.sqlite'
     # This will print all SQL statements
     SQLALCHEMY_ECHO = True
 
@@ -93,6 +95,7 @@ class DefaultConfig(object):
     CUSTOMER_URL_PREFIX = '/customer'
     ORDER_URL_PREFIX = '/order'
     DEVICES_URL_PREFIX = '/devices'
+    GARBAGE_CAN_URL_PREFIX = '/garbage_can'
 
     # Smart Button
     GATEWAY_ID = 'a2d790e1-1670-1217-0000-000db93db700'
@@ -114,4 +117,9 @@ class DefaultConfig(object):
 
     # Pagination
     PER_PAGE = 15
+
+    # LORIOT
+    GATEWAY_ID = "be7a009f"
+    LORIOT_TOKEN = "Rd6c66b0j2xi98cG6DW0Kg"
+    LORIOT_URL = "wss://ap1.loriot.io/app?id=" + GATEWAY_ID + "&token=" + LORIOT_TOKEN
 

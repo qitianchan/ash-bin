@@ -11,7 +11,7 @@ from flask_paginate import Pagination
 from .forms import DeviceProfileForm
 devices = Blueprint('devices', __name__, template_folder='templates')
 from .models import get_garbage_can_choice
-
+from midstation.gdata.models import Data
 @devices.route('/devices_list')
 @login_required
 def devices_list():
@@ -61,8 +61,10 @@ def device_profile(device_id):
 
     if device is None:
         device = Device()
-
-    form = DeviceProfileForm(request.form)
+    can_id = 1
+    if getattr(device, 'garbage_can_obj'):
+        can_id = device.garbage_can_obj.id
+    form = DeviceProfileForm(request.form, garbage_can=can_id)
     if current_user:
             form.garbage_can.choices = get_garbage_can_choice()
 
@@ -76,13 +78,27 @@ def device_profile(device_id):
 @devices.route('/devices/<id>/data', methods=['GET', 'POST'])
 @login_required
 def device_profile_data(id):
+    search = False
+    q = request.args.get('q')
+    if q:
+        search = True
+        try:
+            page = int(request.args.get('page', 1))
+        except ValueError:
+            page = 1
+    else:
+        page = 1
     device = Device.get(id)
-
     if device:
-        datas = device.datas
+        # datas = device.datas.order_by(desc(cls.create_time)).paginate(page, per_page, True).items
+        datas = Data.get_gdatas(current_user, device)
+        count = len(datas)
+        pagination = Pagination(page=page, per_page=15, total=count, css_framework='bootstrap3',
+                                search=search, record_name='devices')
 
-        render_template('devices/device_data.html', datas=datas, device=device)
-
+        return render_template('devices/device_data.html', datas=datas, device=device, pagination=pagination)
+    else:
+        abort(404)
 
 # @devices.route('/devices/<id>/delete', methods=['GET', 'POST'])
 # @login_required

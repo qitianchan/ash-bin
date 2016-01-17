@@ -10,13 +10,13 @@ from midstation.devices.models import Device
 
 class Data(db.Model):
     __tablename__ = 'data'
-    id = db.Column(db.Integer, primary_key=True)
+    # id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     device_id = db.Column(db.Integer, db.ForeignKey('device.id'), nullable=False)
     data = db.Column(db.VARCHAR(255))
     occupancy = db.Column(db.Integer, default=0)            # 垃圾占用率
     temperature = db.Column(db.Integer)                     # 温度
     electric_level = db.Column(db.Integer)                  # 电量等级
-    create_time = db.Column(db.DateTime)
+    create_time = db.Column(db.DateTime,primary_key=True)
 
     def __repr__(self):
         """Set to a unique key specific to the object in the database.
@@ -71,14 +71,15 @@ class Data(db.Model):
             db.session.rollback()
 
     @classmethod
-    def get_gdatas(cls, user, page=1, per_page=15):
+    def get_gdatas(cls, user, device, page=1, per_page=15):
         if user.is_authenticated():
-            return user.orders.order_by(desc(cls.create_time), cls.button_id).paginate(page, per_page, True).items
+            return device.datas.order_by(desc(cls.create_time)).paginate(page, per_page, True).items
 
-    @classmethod
-    def orders_count(cls):
-        if current_user.is_authenticated():
-            return current_user.orders.count()
+    # @classmethod
+    # def data_count(cls, device):
+    #     if current_user.is_authenticated():
+    #
+    #         return device.datas.count()
 
 
 def parse_data(raw_data, bottom_height, top_height):

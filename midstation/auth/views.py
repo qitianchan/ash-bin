@@ -96,7 +96,7 @@ def register():
             user = form.save()
             login_user(user)
             flash("Thanks for registering. %s" % current_user.username, "success")
-            return redirect(url_for('user.button_list'))
+            return redirect(url_for('devices.devices_list'))
     try:
         return render_template('auth/register.html', title='Register', form=form)
     except TemplateNotFound:
@@ -114,7 +114,7 @@ def login():
             if user and authenticated:
                 login_user(user, remember=form.remember_me.data)
                 flash('Logged successfully %s' % current_user.username, 'success')
-                return redirect(url_for('user.button_list'))
+                return redirect(url_for('devices.devices_list'))
 
             flash("Wrong Username or Password.", "danger")
             print 'Wrong Username'

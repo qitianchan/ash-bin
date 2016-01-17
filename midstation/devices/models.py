@@ -12,7 +12,7 @@ class Device(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     mac = db.Column(db.String(120), nullable=False)
     eui = db.Column(db.String(120), nullable=False)
-    # garbage_can_id = db.Column(db.Integer, db.ForeignKey('garbage_can.id'))
+    garbage_can_id = db.Column(db.Integer, db.ForeignKey('garbage_can.id'))
     garbage_can = db.Column(db.String(64))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     occupancy = db.Column(db.Integer, default=0)            # 垃圾占用率
@@ -23,7 +23,10 @@ class Device(db.Model):
     garbage_can_obj = db.relationship('GarbageCan', backref='device', uselist=False)
 
     # one-to-many
-    datas = db.relationship('Data', backref='device', primaryjoin="Data.device_id == Device.id")
+    datas = db.relationship('Data',
+                            backref='device',
+                            lazy='dynamic',
+                            primaryjoin="Data.device_id == Device.id")
 
 
     def __repr__(self):

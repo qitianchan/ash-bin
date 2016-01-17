@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 __author__ = 'qitian'
 from midstation.extensions import db
+from flask_login import current_user
+from midstation.configs.default import DefaultConfig
+from sqlalchemy import desc
 
 
 class GarbageCan(db.Model):
@@ -10,11 +13,11 @@ class GarbageCan(db.Model):
     bottom_height = db.Column(db.Integer, nullable=False)               # 探头距离底部高度
     top_height = db.Column(db.Integer, nullable=False)                  # 探头距离垃圾桶边沿高度
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    device_id = db.Column(db.Integer, db.ForeignKey('device.id'))
+    # device_id = db.Column(db.Integer, db.ForeignKey('device.id'))
 
-    def __init__(self, type, height):
-        self.type = type
-        self.height = height
+    # def __init__(self, type, height):
+    #     self.type = type
+    #     self.height = height
 
     def __repr__(self):
         """Set to a unique key specific to the object in the database.
@@ -43,3 +46,16 @@ class GarbageCan(db.Model):
     @classmethod
     def get(cls, id):
         return cls.query.filter(GarbageCan.id == id).first()
+
+
+
+    @classmethod
+    def can_count(cls):
+        if current_user.is_authenticated():
+            return current_user.garbage_cans.count()
+
+
+    @classmethod
+    def get_garbage_cans(cls, user, page=1, per_page=DefaultConfig.PER_PAGE):
+        if user.is_authenticated():
+            return user.garbage_cans.paginate(page, per_page, True).items

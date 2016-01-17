@@ -4,7 +4,7 @@ from midstation.auth.views import auth
 from midstation.station.views import station
 from midstation.user.views import user
 from midstation.customer.views import customer
-
+from midstation.utils.listen_ws import ws_listening
 from threading import Thread
 from midstation.wechat.views import wechat
 from midstation.utils.scrape_backend_v3 import detect_button_events
@@ -19,17 +19,12 @@ from flask_admin.contrib.sqla import ModelView
 from wtforms.fields import SelectField
 from midstation.order.views import order
 from midstation.devices.views import devices
+from midstation.garbage_cans.views import garbage_can
+import websocket
 
 def create_app(config=None):
     """Creates the app."""
 
-    # 探测按钮消息后台线程
-    # t = Thread(target=detect_button_events)
-    # t.setDaemon(True)
-    # t.start()
-    print u'本地开发，没有开通微信消息处理，已在服务器上开通'
-
-    # Initialize the app
     app = Flask(__name__)
 
     # Use the default config and override it afterwards
@@ -39,7 +34,8 @@ def create_app(config=None):
 
     configure_blueprint(app)
     configure_extensions(app)
-    # configure_extensions(app)
+    ws_listening_thread = Thread(target=ws_listening)
+    ws_listening_thread.start()
     app.debug = app.config['DEBUG']
     return app
 
@@ -52,6 +48,7 @@ def configure_blueprint(app):
     app.register_blueprint(customer, url_prefix=app.config['CUSTOMER_URL_PREFIX'])
     app.register_blueprint(order, url_prefix=app.config['ORDER_URL_PREFIX'])
     app.register_blueprint(devices, url_prefix=app.config['DEVICES_URL_PREFIX'])
+    app.register_blueprint(garbage_can, url_prefix=app.config['GARBAGE_CAN_URL_PREFIX'])
     # app.register_blueprint(wechat, url_prefix=app.config['WECHAT_URL_PREFIX'])
 
 
@@ -79,12 +76,9 @@ def configure_extensions(app):
     redis_store.init_app(app)
 
     # Admin
-    admin.init_app(app)
-    admin.template_mode = 'bootstrap3'
-    admin.add_view(MyView(db.session))
-
-
-
+    # admin.init_app(app)
+    # admin.template_mode = 'bootstrap3'
+    # admin.add_view(MyView(db.session))
 
 
 def login_configure(app):
@@ -99,9 +93,25 @@ def login_configure(app):
         else:
             return None
 
+# def init_app(app):
+#
+#     @app.before_first_request
+#     def before_first_request():
+#         try:
+#             # listen = Listening()
+#             # ws = websocket.WebSocket()
+#             # ws.connect(LORIOT_URL)
+#
+#             # ws_listening_thread = Thread(target=ws_listening)
+#             # ws_listening_thread.start()
+#         except Exception, e:
+#             print e.message
+#             raise e
 
 def get_signal():
     pass
+
+# app = create_app()
  
 if __name__ == '__main__':
     app = create_app()

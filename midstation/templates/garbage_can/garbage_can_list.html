@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block content %}
+
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading"> <h3>垃圾桶</h3></div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>垃圾桶类型</th>
+                        <th>底部高度</th>
+                        <th>顶部高度</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for can in can_datas %}
+                    <tr>
+
+                        <td><a href="{{ url_for('garbage_can.garbage_can_profile', can_id = can.id) }}">{{ can.type }}</a></td>
+                        <td>{{ can.bottom_height }}</td>
+                        <td>{{ can.top_height }}</td>
+                        <td><a class="btn btn-info" href="{{ url_for('garbage_can.garbage_can_profile', can_id = can.id) }}">编辑</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+                </table>
+                </div>
+
+            </div>
+            </div>
+        </div>
+        <div class="row">
+            <a href="{{ url_for('garbage_can.garbage_can_profile', can_id = 0) }}" class=""><button class="btn btn-primary">添加垃圾桶</button></a>
+        </div>
+
+ {{ pagination.links }}
+{% endblock %}

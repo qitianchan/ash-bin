@@ -30,9 +30,10 @@ class User(db.Model):
 
     # One-to-many
     garbage_cans = db.relationship("GarbageCan", backref="user",
-                              primaryjoin="GarbageCan.user_id == User.id",
-                              cascade='all, delete-orphan'
-                              )
+                                    lazy='dynamic',
+                                  primaryjoin="GarbageCan.user_id == User.id",
+                                  cascade='all, delete-orphan'
+                                  )
     # One-to-many
     buttons = db.relationship("Button", backref="user",
                               primaryjoin="Button.user_id == User.id",
