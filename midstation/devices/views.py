@@ -12,6 +12,7 @@ from .forms import DeviceProfileForm
 devices = Blueprint('devices', __name__, template_folder='templates')
 from .models import get_garbage_can_choice
 from midstation.gdata.models import Data
+from sqlalchemy import desc
 @devices.route('/devices_list')
 @login_required
 def devices_list():
@@ -38,9 +39,15 @@ def devices_list():
             data['mac'] = o.mac
             data['eui'] = o.eui
             data['garbage_can'] = o.garbage_can
-            data['occupancy'] = o.occupancy
-            data['temperature'] = o.temperature
-            data['electric_level'] = o.electric_level
+            d = o.datas.order_by(desc(Data.create_time)).first()
+            if d:
+                data['occupancy'] = d.occupancy
+                data['temperature'] = d.temperature
+                data['electric_level'] = d.electric_level
+            else:
+                data['occupancy'] = 0
+                data['temperature'] = 0
+                data['electric_level'] = 0
             devices_datas.append(data)
 
         return render_template('devices/devices_list.html', devices_datas=devices_datas, pagination=pagination)
