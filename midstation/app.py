@@ -34,8 +34,7 @@ def create_app(config=None):
 
     configure_blueprint(app)
     configure_extensions(app)
-    ws_listening_thread = Thread(target=ws_listening)
-    ws_listening_thread.start()
+    init_app(app)
     app.debug = app.config['DEBUG']
     return app
 
@@ -93,20 +92,20 @@ def login_configure(app):
         else:
             return None
 
-# def init_app(app):
+def init_app(app):
 #
-#     @app.before_first_request
-#     def before_first_request():
-#         try:
-#             # listen = Listening()
-#             # ws = websocket.WebSocket()
-#             # ws.connect(LORIOT_URL)
-#
-#             # ws_listening_thread = Thread(target=ws_listening)
-#             # ws_listening_thread.start()
-#         except Exception, e:
-#             print e.message
-#             raise e
+    @app.before_first_request
+    def before_first_request():
+        try:
+            # listen = Listening()
+            # ws = websocket.WebSocket()
+            # ws.connect(LORIOT_URL)
+
+            ws_listening_thread = Thread(target=ws_listening)
+            ws_listening_thread.start()
+        except Exception, e:
+            print e.message
+            raise e
 
 def get_signal():
     pass

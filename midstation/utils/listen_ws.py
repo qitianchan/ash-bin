@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import division
 import websocket
 from midstation.configs.default import DefaultConfig
 from midstation.devices.models import Device
@@ -27,7 +28,7 @@ def _on_message(ws, message):
     cx = sqlite3.connect(DefaultConfig.DATABASE_PATH)
     t = json.loads(message)
     # if t['h'] and t['data'][0:8] == '0027a208':
-    if not t['h']:
+    if not hasattr(t, 'h'):
         data = t['data']
         if len(data) >= 24:
             insert_data(cx, data)
@@ -55,21 +56,22 @@ def get_info(cx, mac):
 
 
 def insert_data(cx, data):
-    mac = data[0:8]
+    mac = data[0:8].upper()
     res = get_info(cx, mac)
-    device_id = res[0]
-    bottom_height = res[1]
-    top_height = res[2]
+    if res:
+        device_id = res[0]
+        bottom_height = res[1]
+        top_height = res[2]
 
-    if device_id:
-        if bottom_height and top_height and bottom_height > top_height:
-            info = parse_data(data, bottom_height, top_height)
-            ins_data = (device_id, data, info[0], info[1], info[2], datetime.now())
-        else:
-            ins_data = (device_id, data, 0, 0, 0, datetime.now())
+        if device_id:
+            if bottom_height and top_height and bottom_height > top_height:
+                info = parse_data(data, bottom_height, top_height)
+                ins_data = (device_id, data, info[0], info[1], info[2], datetime.now())
+            else:
+                ins_data = (device_id, data, 0, 0, 0, datetime.now())
 
-        cx.execute('insert into data values (?,?,?,?,?,?)', ins_data)
-        cx.commit()
+            cx.execute('insert into data values (?,?,?,?,?,?)', ins_data)
+            cx.commit()
 
 
 
@@ -96,6 +98,11 @@ def parse_data(raw_data, bottom_height, top_height):
     t = ((bottom_height - current_height) / (bottom_height - top_height)) * 100
     dm = divmod(t, 5)
     occupancy = dm[0] * 5
+    if occupancy < 0:
+        occupancy = 0
+    if occupancy > 100:
+        occupancy = 100
+
     temperature = int(raw_data[12:14], 16)
     electric_level = int(raw_data[14:16], 16)
 

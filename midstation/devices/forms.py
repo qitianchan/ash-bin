@@ -16,7 +16,7 @@ class DeviceProfileForm(Form):
     def save_form(self, device):
         if isinstance(device, Device):
             device.user_id = current_user.id
-            device.mac = self.mac.data
+            device.mac = self.mac.data.upper()
             device.eui = self.eui.data
             garbage_can_id = int(self.garbage_can.data)
             if garbage_can_id > 0:
