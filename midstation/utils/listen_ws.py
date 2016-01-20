@@ -74,7 +74,6 @@ def insert_data(cx, data):
             cx.commit()
 
 
-
 def parse_data(raw_data, bottom_height, top_height):
     """
     解析出数据
