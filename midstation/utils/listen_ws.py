@@ -24,7 +24,7 @@ def ws_listening():
 
 
 def _on_message(ws, message):
-    print message
+    print(message)
     cx = sqlite3.connect(DefaultConfig.DATABASE_PATH)
     t = json.loads(message)
     # if t['h'] and t['data'][0:8] == '0027a208':

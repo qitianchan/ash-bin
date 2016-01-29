@@ -29,12 +29,14 @@ six==1.9.0
 speaklater==1.3
 SQLAlchemy==1.0.6
 SQLAlchemy-Utils==0.30.11
-Unidecode==0.4.18
 Werkzeug==0.10.4
 Whoosh==2.7.0
 WTForms==2.0.2
 https://github.com/sh4nks/flask-babelex/tarball/master#egg=Flask-BabelEx
 https://github.com/jshipley/Flask-WhooshAlchemy/archive/master.zip#egg=Flask-Whooshalchemy
 wechat-sdk
-Flask-Pagination
+Flask-Paginate
 websocket-client
+flask-admin
+eventlet
+flask-socketio==2.0
