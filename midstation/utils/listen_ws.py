@@ -6,14 +6,15 @@ from midstation.devices.models import Device
 import sqlite3
 import json
 from datetime import datetime
+from midstation.extensions import socketio
+from flask_socketio import emit
+from flask import current_app
 
 url = DefaultConfig.LORIOT_URL
 
 
 def ws_listening():
-    print u'开始监听消息'
-
-
+    print(u'开始监听消息')
     # 一直连接直到连接成功
     try:
         # simulate(r)
@@ -62,16 +63,21 @@ def insert_data(cx, data):
         device_id = res[0]
         bottom_height = res[1]
         top_height = res[2]
-
+        now = datetime.now()
         if device_id:
             if bottom_height and top_height and bottom_height > top_height:
                 info = parse_data(data, bottom_height, top_height)
-                ins_data = (device_id, data, info[0], info[1], info[2], datetime.now())
+                ins_data = (device_id, data, info[0], info[1], info[2], now)
             else:
-                ins_data = (device_id, data, 0, 0, 0, datetime.now())
+                ins_data = (device_id, data, 0, 0, 0, now)
 
             cx.execute('insert into data values (?,?,?,?,?,?)', ins_data)
             cx.commit()
+
+            # emit new message to web
+            socketio.emit(mac, {'occupancy': ins_data[2], 'temperature': ins_data[3],
+                                'electric_level': ins_data[4], 'create_time': now.strftime('%Y-%m-%d %H:%M:%S')},
+                          namespace='/device')
 
 
 def parse_data(raw_data, bottom_height, top_height):
@@ -107,17 +113,10 @@ def parse_data(raw_data, bottom_height, top_height):
 
     return (occupancy, temperature, electric_level)
 
+
+def on_msg(ws, message):
+    print(message)
+
 if __name__ == '__main__':
-    import sqlite3
-    from datetime import datetime
-    cx = sqlite3.connect(DefaultConfig.DATABASE_PATH)
-    t = (1, '2890234234', 20, 30, 40, datetime.now())
-    # cx.execute('insert into data values (?,?,?,?,?,?)', t)
-    # exe = "select id from device where mac='%s'" % '900B95DF0'
-    # res = cx.execute(exe).fetchone()
-    # print res
-    print get_info('900B95DF0')
-    print 'hello'
-    # cx.commit()
-
-
+    ws_app = websocket.WebSocketApp(url=url, on_message=on_msg, on_open=_on_open)
+    ws_app.run_forever()

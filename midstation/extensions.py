@@ -23,7 +23,10 @@ from flask_plugins import PluginManager
 from flask_babelex import Babel
 from flask_wtf.csrf import CsrfProtect
 from flask_admin import Admin
-
+from flask_socketio import SocketIO
+import time
+from threading import Thread
+from flask_socketio import emit
 from flask import Flask
 import os
 
@@ -65,4 +68,7 @@ csrf = CsrfProtect()
 
 # Admin
 admin = Admin()
+
+# SocketIO
+socketio = SocketIO()
 

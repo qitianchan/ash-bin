@@ -10,7 +10,7 @@ from flask_migrate import MigrateCommand, upgrade
 from midstation.app import create_app
 from midstation.extensions import db, plugin_manager
 from midstation.utils.scrape_backend import detect_button_events
-
+from midstation.extensions import socketio
 # Use the development configuration if available
 from midstation.configs.default import DefaultConfig as Config
 
@@ -19,8 +19,11 @@ manager = Manager(app)
 
 
 # Run local server
-manager.add_command("runserver", Server("localhost", port=8099))
+# manager.add_command("runserver", Server("localhost", port=8099))
 
+@manager.command
+def runserver():
+    socketio.run(app, host='localhost', port=8099)
 
 @manager.command
 def initdb():

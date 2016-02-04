@@ -51,7 +51,6 @@ def garbage_can_list():
 @login_required
 def garbage_can_profile(can_id):
     form = GarbageCanForm(request.form)
-
     can = GarbageCan.get(can_id)
     if can is None:
         can = GarbageCan()

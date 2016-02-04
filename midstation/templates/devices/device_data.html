@@ -3,7 +3,7 @@
 
     <div class="container">
         <div class="panel panel-default">
-            <div class="panel-heading"> <h3>{{device.mac}}</h3></div>
+            <div id="device-mac" class="panel-heading"> <h3>{{device.mac}}</h3></div>
             <div class="panel-body">
                 <div class="table-responsive">
                     <table class="table table-hover">
@@ -15,12 +15,12 @@
                         <th>设备电量</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="device-data">
                     {% for data in datas %}
                     <tr>
-                        <td>{{ data['create_time'] }}</td>
-                        <td>{{ data['occupancy'] }}</td>
-                        <td>{{ data['temperature'] }}</td>
+                        <td>{{ data['create_time'].strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                        <td>{{ data['occupancy'] }} %</td>
+                        <td>{{ data['temperature'] }} ℃</td>
                         <td>{{ data['electric_level'] }}</td>
                     </tr>
                     {% endfor %}
@@ -34,4 +34,9 @@
         </div>
           <!-- 分頁-->
           {{ pagination.links }}
+{% endblock %}
+{% block scripts %}}
+<script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+<script src="{{ url_for('static', filename='js/device/device_data.js') }}"></script>
+<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 {% endblock %}

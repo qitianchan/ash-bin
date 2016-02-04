@@ -9,14 +9,21 @@ from sqlalchemy.exc import IntegrityError
 from midstation.devices.models import Device
 from flask_paginate import Pagination
 from .forms import DeviceProfileForm
-devices = Blueprint('devices', __name__, template_folder='templates')
 from .models import get_garbage_can_choice
 from midstation.gdata.models import Data
 from sqlalchemy import desc
+from ..extensions import socketio
+from datetime import datetime
+from flask_socketio import emit
+from threading import Thread
+devices = Blueprint('devices', __name__, template_folder='templates')
+
+
 @devices.route('/devices_list')
 @login_required
 def devices_list():
     try:
+
         search = False
         q = request.args.get('q')
         if q:
@@ -82,6 +89,7 @@ def device_profile(device_id):
 
     return render_template('devices/device_profile.html', form=form, device=device)
 
+
 @devices.route('/devices/<id>/data', methods=['GET', 'POST'])
 @login_required
 def device_profile_data(id):
@@ -106,20 +114,3 @@ def device_profile_data(id):
         return render_template('devices/device_data.html', datas=datas, device=device, pagination=pagination)
     else:
         abort(404)
-
-# @devices.route('/devices/<id>/delete', methods=['GET', 'POST'])
-# @login_required
-# def delete_devices(id):
-#     devices = devices.get(id)
-#     if devices is None:
-#         flash(u'不存在该客人', category='danger')
-#         return redirect(url_for('devices.devices_list'))
-#
-#     try:
-#         devices.delete()
-#     except IntegrityError:
-#         flash(u'删除失败，存在引用到该服务的记录', 'danger')
-#     except Exception:
-#         flash(u'删除失败', category='danger')
-#
-#     return redirect(url_for('devices.devices_list'))
