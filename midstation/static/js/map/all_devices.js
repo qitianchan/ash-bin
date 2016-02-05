@@ -5,6 +5,23 @@ $(document).ready(function(){
         zoom: 13
     });
     map.clearMap();  // 清除地图覆盖物
+    var aj = $.ajax({
+        url: 'devices_lnglat',
+        type:'get',
+        cache: false,
+        dataType: 'json',
+        success: function(res) {
+            if (res.data) {
+                var positions = [];
+                $.each(res.data, function (i, item) {
+                    var p = {};
+                    p.lng = item.lng;
+                    p.lat = item.lat;
+                    positions.push(p)
+                });
+            }
+        }
+    });
     var markers = [{
         icon: 'http://webapi.amap.com/theme/v1.3/markers/n/mark_b1.png',
         position: [116.205467, 39.907761]
