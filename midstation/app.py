@@ -1,6 +1,5 @@
 # -*-coding:utf-8 -*-
 from midstation.auth.views import auth
-from midstation.station.views import station
 from midstation.user.views import user
 from midstation.customer.views import customer
 from midstation.utils.listen_ws import ws_listening
@@ -74,7 +73,6 @@ def create_app(config=None):
 
 def configure_blueprint(app):
     app.register_blueprint(auth)
-    app.register_blueprint(station, url_prefix=app.config['STATION_URL_PREFIX'])
     app.register_blueprint(user, url_prefix=app.config['USER_URL_PREFIX'])
     app.register_blueprint(service, url_prefix=app.config['SERVICE_URL_PREFIX'])
     app.register_blueprint(customer, url_prefix=app.config['CUSTOMER_URL_PREFIX'])

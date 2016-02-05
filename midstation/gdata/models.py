@@ -7,6 +7,7 @@ from midstation.user.models import Button
 from sqlalchemy import desc
 from flask_login import current_user
 from midstation.devices.models import Device
+from sqlalchemy import and_
 
 class Data(db.Model):
     __tablename__ = 'data'
@@ -16,7 +17,7 @@ class Data(db.Model):
     occupancy = db.Column(db.Integer, default=0)            # 垃圾占用率
     temperature = db.Column(db.Integer)                     # 温度
     electric_level = db.Column(db.Integer)                  # 电量等级
-    create_time = db.Column(db.DateTime,primary_key=True)
+    create_time = db.Column(db.DateTime, primary_key=True)
 
     def __repr__(self):
         """Set to a unique key specific to the object in the database.
@@ -75,11 +76,9 @@ class Data(db.Model):
         if user.is_authenticated():
             return device.datas.order_by(desc(cls.create_time)).paginate(page, per_page, True).items
 
-    # @classmethod
-    # def data_count(cls, device):
-    #     if current_user.is_authenticated():
-    #
-    #         return device.datas.count()
+    @classmethod
+    def get_datas_in_date(cls, device_id, limit_date):
+        return cls.query.filter(and_(cls.device_id == device_id, cls.create_time >= limit_date)).all()
 
 
 def parse_data(raw_data, bottom_height, top_height):

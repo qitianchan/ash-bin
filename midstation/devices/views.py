@@ -14,10 +14,11 @@ from midstation.gdata.models import Data
 from sqlalchemy import desc
 from ..extensions import socketio
 from datetime import datetime
+from datetime import timedelta
 from flask_socketio import emit
 from threading import Thread
 devices = Blueprint('devices', __name__, template_folder='templates')
-
+from flask import jsonify
 
 @devices.route('/devices_list')
 @login_required
@@ -90,7 +91,7 @@ def device_profile(device_id):
     return render_template('devices/device_profile.html', form=form, device=device)
 
 
-@devices.route('/devices/<id>/data', methods=['GET', 'POST'])
+@devices.route('/device/<id>/data', methods=['GET', 'POST'])
 @login_required
 def device_profile_data(id):
     search = False
@@ -114,3 +115,20 @@ def device_profile_data(id):
         return render_template('devices/device_data.html', datas=datas, device=device, pagination=pagination)
     else:
         abort(404)
+
+@devices.route('/device/<id>/data_one_month', methods=['GET', 'POST'])
+@login_required
+def device_ajax_data(id):
+    one_month_ago = datetime.now() - timedelta(days=30)
+    datas = Data.get_datas_in_date(id, one_month_ago)
+    res = []
+    if datas:
+        for d in datas:
+            data = dict()
+            data['occupancy'] = d.occupancy
+            data['temperature'] = d.temperature
+            data['electric_level'] = d.electric_level
+            data['create_time'] = d.create_time.strftime('%m-%d %H:%M')
+            res.append(data)
+
+    return jsonify({'data': res})

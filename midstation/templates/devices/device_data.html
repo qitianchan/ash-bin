@@ -2,6 +2,7 @@
 {% block content %}
 
     <div class="container">
+        <div id="chart" class="device-data-chart"></div>
         <div class="panel panel-default">
             <div id="device-mac" class="panel-heading"> <h3>{{device.mac}}</h3></div>
             <div class="panel-body">
@@ -38,5 +39,6 @@
 {% block scripts %}}
 <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
 <script src="{{ url_for('static', filename='js/device/device_data.js') }}"></script>
+<script src="{{ url_for('static', filename='js/echarts.min.js') }}"></script>
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 {% endblock %}

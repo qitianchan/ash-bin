@@ -544,3 +544,7 @@ input {
     margin-bottom: 20px;
     box-shadow: rgba(0, 0, 0, 0.0980392) 0 1px 1px;
 }
+
+.device-data-chart {
+    height: 500px;
+}
