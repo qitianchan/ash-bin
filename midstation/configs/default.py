@@ -96,6 +96,7 @@ class DefaultConfig(object):
     ORDER_URL_PREFIX = '/order'
     DEVICES_URL_PREFIX = '/devices'
     GARBAGE_CAN_URL_PREFIX = '/garbage_can'
+    MAP_URL_PREFIX = '/map'
 
     # Smart Button
     GATEWAY_ID = 'a2d790e1-1670-1217-0000-000db93db700'

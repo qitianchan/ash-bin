@@ -16,6 +16,7 @@ from wtforms.fields import SelectField
 from midstation.order.views import order
 from midstation.devices.views import devices
 from midstation.garbage_cans.views import garbage_can
+from midstation.map.views import map
 import websocket
 from midstation.extensions import socketio
 from flask import session, request
@@ -79,6 +80,7 @@ def configure_blueprint(app):
     app.register_blueprint(order, url_prefix=app.config['ORDER_URL_PREFIX'])
     app.register_blueprint(devices, url_prefix=app.config['DEVICES_URL_PREFIX'])
     app.register_blueprint(garbage_can, url_prefix=app.config['GARBAGE_CAN_URL_PREFIX'])
+    app.register_blueprint(map, url_prefix=app.config['MAP_URL_PREFIX'])
 
 
 class MyView(ModelView):

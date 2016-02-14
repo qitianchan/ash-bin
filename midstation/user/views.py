@@ -16,16 +16,6 @@ from sqlalchemy.exc import IntegrityError
 user = Blueprint('user', __name__, template_folder='templates')
 
 
-@user.route('/button_list')
-@login_required
-def button_list():
-    try:
-        #get buttons
-        buttons = get_buttons(current_user.id)
-        return render_template("user/button_list.html", buttons=buttons)
-    except TemplateNotFound:
-        abort(404)
-
 
 #按钮编辑
 @user.route('/button/<node_id>', methods=['GET', 'POST'])

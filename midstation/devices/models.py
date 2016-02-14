@@ -18,7 +18,9 @@ class Device(db.Model):
     occupancy = db.Column(db.Integer, default=0)            # 垃圾占用率
     temperature = db.Column(db.Integer)                     # 温度
     electric_level = db.Column(db.Integer)                  # 电量等级
-
+    longitude = db.Column(db.Float)
+    latitude = db.Column(db.Float)
+    
     # one-to-one
     garbage_can_obj = db.relationship('GarbageCan', backref='device', uselist=False)
 
