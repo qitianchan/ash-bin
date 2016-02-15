@@ -6,7 +6,25 @@ $(document).ready(function(){
     });
     map.clearMap();  // 清除地图覆盖物
     var _onClick = function() {
-        alert(this.device_id)
+        // todo:点击显示数据
+        var aj = $.ajax({
+            url: 'device_data',
+            type: 'get',
+            cache: false,
+            dataType: 'json',
+            data: {device_id: this.device_id} ,
+            success: function(res) {
+                if (res.data) {
+                    // todo: 用模态框显示数据
+                    var inst = $('[data-remodal-id=modal]').remodal();
+
+                    /**
+                     * Opens the modal window
+                     */
+                    inst.open();
+                }
+            }
+        })
     };
 
     var aj = $.ajax({
@@ -44,29 +62,4 @@ $(document).ready(function(){
             }
         }
     });
-    //var markers = [{
-    //    icon: 'http://webapi.amap.com/theme/v1.3/markers/n/mark_b1.png',
-    //    position: [116.205467, 39.907761]
-    //}, {
-    //    icon: 'http://webapi.amap.com/theme/v1.3/markers/n/mark_b2.png',
-    //    position: [116.368904, 39.913423]
-    //}, {
-    //    icon: 'http://webapi.amap.com/theme/v1.3/markers/n/mark_b3.png',
-    //    position: [116.305467, 39.807761]
-    //}];
-    //// 添加一些分布不均的点到地图上,地图上添加三个点标记，作为参照
-    //markers.forEach(function(marker) {
-    //    new AMap.Marker({
-    //        map: map,
-    //        icon: marker.icon,
-    //        position: [marker.position[0], marker.position[1]],
-    //        offset: new AMap.Pixel(-12, -36)
-    //    });
-    //});
-    //var newCenter = map.setFitView();
-    //// 添加事件监听, 使地图自适应显示到合适的范围
-    //AMap.event.addDomListener(document.getElementById('setFitView'), 'click', function() {
-    //    var newCenter = map.setFitView();
-    //});
 });
-//var map = new AMap.Map('container');

@@ -4,9 +4,6 @@ __author__ = 'qitian'
 from flask import Blueprint, redirect, request, url_for, render_template, abort, flash
 from flask_login import login_required, current_user
 from jinja2 import TemplateNotFound
-from midstation.user.models import User, Service
-from midstation.service.forms import ServiceProfileForm
-from sqlalchemy.exc import IntegrityError
 from midstation.garbage_cans.model import GarbageCan
 from flask_paginate import Pagination
 from .forms import GarbageCanForm

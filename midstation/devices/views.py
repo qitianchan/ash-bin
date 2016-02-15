@@ -3,8 +3,6 @@ __author__ = 'qitian'
 from flask import Blueprint, redirect, request, url_for, render_template, abort, flash
 from flask_login import login_required, current_user
 from jinja2 import TemplateNotFound
-from midstation.user.models import User, Service, Customer
-from midstation.customer.forms import CustomerProfileForm
 from sqlalchemy.exc import IntegrityError
 from midstation.devices.models import Device
 from flask_paginate import Pagination

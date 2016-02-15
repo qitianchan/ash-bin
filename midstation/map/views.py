@@ -3,8 +3,6 @@ __author__ = 'qitian'
 from flask import Blueprint, redirect, request, url_for, render_template, abort, flash
 from flask_login import login_required, current_user
 from jinja2 import TemplateNotFound
-from midstation.user.models import User, Service, Customer
-from midstation.customer.forms import CustomerProfileForm
 from sqlalchemy.exc import IntegrityError
 from midstation.devices.models import Device
 from flask_paginate import Pagination
@@ -46,3 +44,20 @@ def devices_lnglat():
         data.append(d)
     return jsonify({'data': data})
 
+
+@map.route('/device_data')
+@login_required
+def device_data():
+    res = []
+    device_id = request.args['device_id']
+    device = Device.get(device_id)
+    if device:
+        datas = device.datas.order_by(desc('create_time')).limit(200).all()
+        for d in datas:
+            data = dict()
+            data['occupancy'] = d.occupancy
+            data['temperature'] = d.temperature
+            data['electric_level'] = d.electric_level
+            data['create_time'] = d.create_time.strftime('%m-%d %H:%M')
+            res.append(data)
+    return jsonify({'data': res})

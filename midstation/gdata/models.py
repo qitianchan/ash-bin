@@ -3,7 +3,6 @@ from __future__ import division
 from midstation.extensions import db
 from sqlalchemy.exc import SQLAlchemyError
 from datetime import datetime
-from midstation.user.models import Button
 from sqlalchemy import desc
 from flask_login import current_user
 from midstation.devices.models import Device

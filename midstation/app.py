@@ -1,19 +1,15 @@
 # -*-coding:utf-8 -*-
 from midstation.auth.views import auth
 from midstation.user.views import user
-from midstation.customer.views import customer
 from midstation.utils.listen_ws import ws_listening
-from midstation.utils.scrape_backend_v3 import detect_button_events
 from extensions import login_manager
-from midstation.user.models import User, Button
+from midstation.user.models import User
 from midstation.devices.models import Device
 from midstation.gdata.models import Data
 from midstation.garbage_cans.model import GarbageCan
-from midstation.service.views import service
 from midstation.extensions import csrf, redis_store, admin, db
 from flask_admin.contrib.sqla import ModelView
 from wtforms.fields import SelectField
-from midstation.order.views import order
 from midstation.devices.views import devices
 from midstation.garbage_cans.views import garbage_can
 from midstation.map.views import map
@@ -75,9 +71,6 @@ def create_app(config=None):
 def configure_blueprint(app):
     app.register_blueprint(auth)
     app.register_blueprint(user, url_prefix=app.config['USER_URL_PREFIX'])
-    app.register_blueprint(service, url_prefix=app.config['SERVICE_URL_PREFIX'])
-    app.register_blueprint(customer, url_prefix=app.config['CUSTOMER_URL_PREFIX'])
-    app.register_blueprint(order, url_prefix=app.config['ORDER_URL_PREFIX'])
     app.register_blueprint(devices, url_prefix=app.config['DEVICES_URL_PREFIX'])
     app.register_blueprint(garbage_can, url_prefix=app.config['GARBAGE_CAN_URL_PREFIX'])
     app.register_blueprint(map, url_prefix=app.config['MAP_URL_PREFIX'])
