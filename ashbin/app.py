@@ -1,20 +1,20 @@
 # -*-coding:utf-8 -*-
-from midstation.auth.views import auth
-from midstation.user.views import user
-from midstation.utils.listen_ws import ws_listening
+from ashbin.auth.views import auth
+from ashbin.user.views import user
+from ashbin.utils.listen_ws import ws_listening
 from extensions import login_manager
-from midstation.user.models import User
-from midstation.devices.models import Device
-from midstation.gdata.models import Data
-from midstation.garbage_cans.model import GarbageCan
-from midstation.extensions import csrf, redis_store, admin, db
+from ashbin.user.models import User
+from ashbin.devices.models import Device
+from ashbin.gdata.models import Data
+from ashbin.garbage_cans.model import GarbageCan
+from ashbin.extensions import csrf, redis_store, admin, db
 from flask_admin.contrib.sqla import ModelView
 from wtforms.fields import SelectField
-from midstation.devices.views import devices
-from midstation.garbage_cans.views import garbage_can
-from midstation.map.views import map
+from ashbin.devices.views import devices
+from ashbin.garbage_cans.views import garbage_can
+from ashbin.map.views import map
 import websocket
-from midstation.extensions import socketio
+from ashbin.extensions import socketio
 from flask import session, request
 from flask import Flask
 from threading import Thread
@@ -57,7 +57,7 @@ def create_app(config=None):
     app = Flask(__name__)
 
     # Use the default config and override it afterwards
-    app.config.from_object('midstation.configs.default.DefaultConfig')
+    app.config.from_object('ashbin.configs.default.DefaultConfig')
     # Update the config
     app.config.from_object(config)
 

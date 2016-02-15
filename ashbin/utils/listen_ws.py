@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
 import websocket
-from midstation.configs.default import DefaultConfig
-from midstation.devices.models import Device
+from ashbin.configs.default import DefaultConfig
+from ashbin.devices.models import Device
 import sqlite3
 import json
 from datetime import datetime
-from midstation.extensions import socketio
+from ashbin.extensions import socketio
 from flask_socketio import emit
 from flask import current_app
 

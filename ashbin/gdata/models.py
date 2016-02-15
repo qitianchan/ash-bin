@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
-from midstation.extensions import db
+from ashbin.extensions import db
 from sqlalchemy.exc import SQLAlchemyError
 from datetime import datetime
 from sqlalchemy import desc
 from flask_login import current_user
-from midstation.devices.models import Device
+from ashbin.devices.models import Device
 from sqlalchemy import and_
 
 class Data(db.Model):

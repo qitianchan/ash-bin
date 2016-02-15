@@ -4,9 +4,9 @@ from flask_wtf import Form
 from flask import flash
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
-from midstation.user.models import User
+from ashbin.user.models import User
 from flask_login import current_user
-from midstation.extensions import redis_store
+from ashbin.extensions import redis_store
 from redis import Redis
 
 class UserInfoForm(Form):

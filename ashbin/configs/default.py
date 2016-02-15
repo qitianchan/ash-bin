@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    midstation.configs.default
+    ashbin.configs.default
     ~~~~~~~~~~~~~~~~~~~~~~~
 
     This is the default configuration for FlaskBB that every site should have.
@@ -105,7 +105,7 @@ class DefaultConfig(object):
     LINKLAB_PASSWORD = 'Ni0t!0715'
 
     # Wechat
-    WECHAT_TOKEN = 'midstation'
+    WECHAT_TOKEN = 'ashbin'
     WECHAT_APPID = 'wx6b84ff9cb6f9a54e'
     WECHAT_APPSECRET = '4e09e5b35198bdbf35b90a65d5f76af4'
     AUTH_KEY_EXPIRE = 300           # 微信验证码过去时间（min）

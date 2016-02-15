@@ -4,8 +4,8 @@ from flask_wtf import Form
 from wtforms.fields import StringField, TextAreaField, SelectField, FloatField
 from wtforms.validators import DataRequired
 from flask_login import current_user
-from midstation.devices.models import Device
-from midstation.garbage_cans.model import GarbageCan
+from ashbin.devices.models import Device
+from ashbin.garbage_cans.model import GarbageCan
 
 
 class DeviceProfileForm(Form):

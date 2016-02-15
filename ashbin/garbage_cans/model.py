@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 __author__ = 'qitian'
-from midstation.extensions import db
+from ashbin.extensions import db
 from flask_login import current_user
-from midstation.configs.default import DefaultConfig
+from ashbin.configs.default import DefaultConfig
 from sqlalchemy import desc
 
 

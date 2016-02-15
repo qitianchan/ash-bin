@@ -7,7 +7,7 @@ from wtforms import (StringField, PasswordField, BooleanField, HiddenField,
                      SubmitField)
 from wtforms.validators import (DataRequired, InputRequired, Email, EqualTo,
                                 regexp, ValidationError, Length)
-from midstation.user.models import User
+from ashbin.user.models import User
 
 USERNAME_RE = r'^[\w.+-]+$'
 is_username = regexp(USERNAME_RE,

@@ -1,9 +1,9 @@
 #-*-coding:utf-8
 __author__ = 'qitian'
 
-from midstation.extensions import db
+from ashbin.extensions import db
 from datetime import datetime
-from midstation.utils.helpers import create_salt
+from ashbin.utils.helpers import create_salt
 from hashlib import sha1
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.exc import IntegrityError

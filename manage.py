@@ -7,12 +7,12 @@ from flask_script import (Manager, Shell, Server, prompt, prompt_pass,
                           prompt_bool)
 from flask_migrate import MigrateCommand, upgrade
 
-from midstation.app import create_app
-from midstation.extensions import db, plugin_manager
-from midstation.utils.scrape_backend import detect_button_events
-from midstation.extensions import socketio
+from ashbin.app import create_app
+from ashbin.extensions import db, plugin_manager
+from ashbin.utils.scrape_backend import detect_button_events
+from ashbin.extensions import socketio
 # Use the development configuration if available
-from midstation.configs.default import DefaultConfig as Config
+from ashbin.configs.default import DefaultConfig as Config
 
 app = create_app()
 manager = Manager(app)

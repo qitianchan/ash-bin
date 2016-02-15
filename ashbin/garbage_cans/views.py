@@ -4,7 +4,7 @@ __author__ = 'qitian'
 from flask import Blueprint, redirect, request, url_for, render_template, abort, flash
 from flask_login import login_required, current_user
 from jinja2 import TemplateNotFound
-from midstation.garbage_cans.model import GarbageCan
+from ashbin.garbage_cans.model import GarbageCan
 from flask_paginate import Pagination
 from .forms import GarbageCanForm
 

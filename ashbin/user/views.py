@@ -3,10 +3,10 @@ __author__ = 'qitian'
 
 from flask import Blueprint, request, render_template, abort, redirect, url_for, flash
 from jinja2 import TemplateNotFound
-from midstation.user.models import User
+from ashbin.user.models import User
 from flask_login import login_required, current_user
-from midstation.user.forms import UserInfoForm, AuthWechatForm
-from midstation.extensions import db
+from ashbin.user.forms import UserInfoForm, AuthWechatForm
+from ashbin.extensions import db
 from sqlalchemy.exc import IntegrityError
 
 user = Blueprint('user', __name__, template_folder='templates')

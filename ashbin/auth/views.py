@@ -4,16 +4,16 @@ from flask import Blueprint, request, redirect, flash, url_for
 from flask import render_template
 from jinja2 import TemplateNotFound
 from flask import abort
-from midstation.auth.forms import LoginForm, RegisterForm
+from ashbin.auth.forms import LoginForm, RegisterForm
 from wechat_sdk import WechatBasic
 from flask_login import (login_user, current_user, login_required, logout_user)
-from midstation.user.views import user
-from midstation.user.models import User
-from midstation.extensions import csrf
+from ashbin.user.views import user
+from ashbin.user.models import User
+from ashbin.extensions import csrf
 from string import lower
-from midstation.configs.default import DefaultConfig
+from ashbin.configs.default import DefaultConfig
 from random import randint
-from midstation.extensions import redis_store
+from ashbin.extensions import redis_store
 from redis import Redis, ResponseError
 
 

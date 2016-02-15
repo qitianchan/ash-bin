@@ -3,7 +3,7 @@ __author__ = 'qitian'
 
 
 """
-    midstation.extensions
+    ashbin.extensions
     ~~~~~~~~~~~~~~~~~~~~
 
     The extensions that are used by FlaskTest.

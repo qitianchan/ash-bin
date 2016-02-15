@@ -3,8 +3,8 @@ __author__ = 'qitian'
 from sqlalchemy.exc import SQLAlchemyError
 from flask import render_template, redirect, flash, blueprints
 from flask_login import login_required, current_user
-from midstation.extensions import db
-from midstation.configs.default import DefaultConfig
+from ashbin.extensions import db
+from ashbin.configs.default import DefaultConfig
 from sqlalchemy import desc
 class Device(db.Model):
     __tablename__ = 'device'

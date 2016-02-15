@@ -4,9 +4,9 @@ from flask import Blueprint, redirect, request, url_for, render_template, abort,
 from flask_login import login_required, current_user
 from jinja2 import TemplateNotFound
 from sqlalchemy.exc import IntegrityError
-from midstation.devices.models import Device
+from ashbin.devices.models import Device
 from flask_paginate import Pagination
-from midstation.gdata.models import Data
+from ashbin.gdata.models import Data
 from sqlalchemy import desc
 from ..extensions import socketio
 from datetime import datetime
