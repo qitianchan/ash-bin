@@ -53,6 +53,7 @@ def device_data():
     device = Device.get(device_id)
     if device:
         datas = device.datas.order_by(desc('create_time')).limit(200).all()
+        datas = reversed(datas)
         for d in datas:
             data = dict()
             data['occupancy'] = d.occupancy

@@ -56,7 +56,6 @@ def garbage_can_profile(can_id):
         flash(u'保存成功', category='success')
         return redirect(url_for('garbage_can.garbage_can_list'))
 
-    services = current_user.services
     return render_template('garbage_can/garbage_can_profile.html', form=form, can=can)
 
 #

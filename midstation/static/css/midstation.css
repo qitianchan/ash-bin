@@ -554,3 +554,8 @@ input {
 .device-data-chart {
     height: 500px;
 }
+
+.map_device-data-chart {
+    width: 630px;
+    height: 500px;
+}
