@@ -3,37 +3,11 @@
  */
 $(document).ready(function(){
     namespace = '/device';
+    var myChart = echarts.init(document.getElementById('chart'));
+    var date = [];
+    var data = [];
 
-    var socket = io.connect('http://' + document.domain + ':' + location.port + namespace);
-    // use mac for eventName
-    var eventName = $('#device-mac').text().replace(/[ ]/g,"");
-    //
-    socket.on(eventName, function(msg) {
-
-        $('#device-data').prepend("<tr>" +
-            "<td>" + msg.create_time + "</td>" +
-            "<td>" + msg.occupancy + " %</td>" +
-            "<td>" + msg.temperature + " ℃</td>" +
-            "<td>" + msg.electric_level + "</td></tr>");
-
-    });
-    var aj = $.ajax({
-        url: 'data_one_month',
-
-        type:'get',
-        cache: false,
-        dataType: 'json',
-        success: function(res) {
-           if(res.data){
-               var date = [];
-               var data = [];
-               $.each(res.data, function(i, item){
-                   date.push(item.create_time);
-                   data.push(item.occupancy);
-               });
-               var myChart = echarts.init(document.getElementById('chart'));
-
-    option = {
+    var option = {
         title: {
             x: 'center',
             text: '垃圾占用率'
@@ -57,7 +31,7 @@ $(document).ready(function(){
         ],
         dataZoom: {
             type: 'inside',
-            start: 85,
+            start: 40,
             end: 100
         },
         series: [
@@ -74,10 +48,41 @@ $(document).ready(function(){
             }
         ]
     };
+    var socket = io.connect('http://' + document.domain + ':' + location.port + namespace);
+    // use mac for eventName
+    var eventName = $('#device-mac').text().replace(/[ ]/g,"");
+    //
+    socket.on(eventName, function(msg) {
 
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
-           }
-        }
+        $('#device-data').prepend("<tr>" +
+            "<td>" + msg.create_time + "</td>" +
+            "<td>" + msg.occupancy + " %</td>" +
+            "<td>" + msg.temperature + " ℃</td>" +
+            "<td>" + msg.electric_level + "</td></tr>");
+
+        date.push(msg.create_time);
+        data.push(msg.occupancy);
+        myChart.setOption(option);
+    });
+    var aj = $.ajax({
+        url: 'data_one_month',
+
+        type:'get',
+        cache: false,
+        dataType: 'json',
+        success: function(res) {
+           if(res.data){
+               //var date = [];
+               //var data = [];
+               $.each(res.data, function(i, item){
+                   date.push(item.create_time);
+                   data.push(item.occupancy);
+               });
+               //var myChart = echarts.init(document.getElementById('chart'));
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+               }
+          }
     });
 });

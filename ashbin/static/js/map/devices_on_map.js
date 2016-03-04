@@ -6,7 +6,6 @@ $(document).ready(function(){
     });
     map.clearMap();  // 清除地图覆盖物
     var _onClick = function() {
-        // todo:点击显示数据
         var aj = $.ajax({
             url: 'device_data',
             type: 'get',
@@ -15,7 +14,6 @@ $(document).ready(function(){
             data: {device_id: this.device_id} ,
             success: function(res) {
                 if (res.data) {
-                    // todo: 用模态框显示数据
                     var date = [];
                    var data = [];
                    $.each(res.data, function(i, item){
@@ -78,7 +76,8 @@ $(document).ready(function(){
             }
         })
     };
-
+    // todo: 显示不同状态的垃圾桶标志， 超过80%的用红图标标志
+    // todo: 设备在地图上的同步信息
     var aj = $.ajax({
         url: 'devices_lnglat',
         type:'get',

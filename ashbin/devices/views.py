@@ -119,6 +119,7 @@ def device_profile_data(id):
 def device_ajax_data(id):
     one_month_ago = datetime.now() - timedelta(days=30)
     datas = Data.get_datas_in_date(id, one_month_ago)
+    # datas = device.datas.order_by(desc('create_time')).limit(200).all()
     res = []
     if datas:
         for d in datas:

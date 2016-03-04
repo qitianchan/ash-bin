@@ -120,12 +120,12 @@ class DefaultConfig(object):
     PER_PAGE = 15
 
     # LORIOT
-    # GATEWAY_ID = "be7a009f"
-    # LORIOT_TOKEN = "Rd6c66b0j2xi98cG6DW0Kg"
-    # LORIOT_URL = "wss://ap1.loriot.io/app?id=" + GATEWAY_ID + "&token=" + LORIOT_TOKEN
-    GATEWAY_ID = "BE7A0029"
-    LORIOT_TOKEN = "7AXCO2-Kkle42YGVVKvmmQ"
-    LORIOT_URL = "wss://eu1.loriot.io/app?id=" + GATEWAY_ID + "&token=" + LORIOT_TOKEN
+    GATEWAY_ID = "be7a009f"
+    LORIOT_TOKEN = "Rd6c66b0j2xi98cG6DW0Kg"
+    LORIOT_URL = "wss://ap1.loriot.io/app?id=" + GATEWAY_ID + "&token=" + LORIOT_TOKEN
+    # GATEWAY_ID = "BE7A0029"
+    # LORIOT_TOKEN = "7AXCO2-Kkle42YGVVKvmmQ"
+    # LORIOT_URL = "wss://eu1.loriot.io/app?id=" + GATEWAY_ID + "&token=" + LORIOT_TOKEN
 
     # SocketIO secret key
     SECRET_KEY = 'ash-bin secret key'
