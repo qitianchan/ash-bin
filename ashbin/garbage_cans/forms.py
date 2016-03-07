@@ -10,16 +10,11 @@ class GarbageCanForm(Form):
     type = StringField(u'垃圾桶类型', validators=[DataRequired()])
     bottom_height = IntegerField(u'距离底部高度（cm）', validators=[DataRequired()])
     top_height = IntegerField(u'距离顶部高度(cm)', validators=[DataRequired()])
-    longitude = FloatField(u'经度')
-    latitude = FloatField(u'纬度')
-    test = IntegerField(u'test')
 
     def save_form(self, garbage_can):
         garbage_can.user_id = current_user.id
         garbage_can.type = self.type.data
         garbage_can.bottom_height = int(self.bottom_height.data)
         garbage_can.top_height = int(self.top_height.data)
-        garbage_can.longitude = float(self.longitude.data)
-        garbage_can.latitude = float(self.latitude.data)
         garbage_can.save()
 

@@ -52,7 +52,14 @@ def garbage_can_profile(can_id):
     if can is None:
         can = GarbageCan()
     if request.method == 'POST' and form.validate_on_submit():
-        form.save_form(can)
+        try:
+            if int(form.bottom_height.data) <= int(form.top_height.data):
+                flash(u'垃圾桶底部高度应该大于顶部高度', category='error')
+                return render_template('garbage_can/garbage_can_profile.html', form=form, can=can)
+            form.save_form(can)
+        except TypeError as e:
+            flash(u'数据类型错误', category='error')
+            return render_template('garbage_can/garbage_can_profile.html', form=form, can=can)
         flash(u'保存成功', category='success')
         return redirect(url_for('garbage_can.garbage_can_list'))
 

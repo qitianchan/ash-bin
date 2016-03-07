@@ -2,7 +2,7 @@
 from ashbin.auth.views import auth
 from ashbin.user.views import user
 from ashbin.utils.listen_ws import ws_listening
-from extensions import login_manager
+from ashbin.extensions import login_manager
 from ashbin.user.models import User
 from ashbin.devices.models import Device
 from ashbin.gdata.models import Data
@@ -150,5 +150,5 @@ app = create_app()
  
 if __name__ == '__main__':
     app.debug = True
-    socketio.run(app, port=8020)
+    socketio.run(app, host='127.0.0.1', port=8099)
     # app.run()
