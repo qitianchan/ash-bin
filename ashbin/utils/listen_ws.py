@@ -9,39 +9,69 @@ from datetime import datetime
 from ashbin.extensions import socketio
 from flask_socketio import emit
 from flask import current_app
-from socketIO_client import SocketIO
-url = DefaultConfig.LORIOT_URL
+from socketIO_client import SocketIO, BaseNamespace
 
+url = DefaultConfig.LORIOT_URL
 HOST = DefaultConfig.OURSELF_HOST
 APP_EUI = DefaultConfig.OURSELF_APP_EUI
 TOKEN = DefaultConfig.OURSELF_TOKEN
+PORT = DefaultConfig.OURSELF_PORT
+
 
 def ws_listening():
     print(u'开始监听消息')
     # 一直连接直到连接成功
     try:
-        # simulate(r)
-        # socketio_cli = SocketIO()
-        ws_app = websocket.WebSocketApp(url=url, on_message=_on_message, on_open=_on_open)
-        ws_app.run_forever()
+        socketio_cli = SocketIO(host=HOST, port=PORT, params={'app_eui': APP_EUI, 'token': TOKEN})
+        test_namespace = socketio_cli.define(TestNamespace, '/test')
+        socketio_cli.wait()
+
     except Exception as e:
         ws_listening()
 
 
-def _on_message(ws, message):
+class TestNamespace(BaseNamespace):
+
+        def on_connect(self):
+            print('socket io connected')
+
+        def on_disconnect(self):
+            print('socket io disconnected')
+
+        def on_error_msg(self):
+            print('error occured')
+            print(self)
+
+        def on_post_rx(self, msg):
+            print('get post msg')
+            cook_rx_message(msg)
+            # todo: 处理失败提示
+
+
+        def on_enqueued(self):
+            print('enqueued')
+            print(self)
+
+        def on_connect_error(self, msg):
+            print('connect error')
+            print(msg)
+
+
+def cook_rx_message(message):
+    """
+    处理接收到的信息
+    :param message:
+    :return:
+    """
     print(message)
     cx = sqlite3.connect(DefaultConfig.DATABASE_PATH)
-    t = json.loads(message)
+    if not isinstance(message, dict):
+        message = json.loads(message)
     # if t['h'] and t['data'][0:8] == '0027a208':
-    if not hasattr(t, 'h'):
-        data = t['data']
+    if not hasattr(message, 'h'):
+        data = message['data']
         if len(data) >= 24:
             insert_data(cx, data)
-
-
-
-def _on_open():
-    print(u'连接websocket成功')
 
 
 def get_info(cx, mac):
@@ -122,65 +152,4 @@ def on_msg(ws, message):
     print(message)
 
 if __name__ == '__main__':
-    # ws_app = websocket.WebSocketApp(url=url, on_message=on_msg, on_open=_on_open)
-    # ws_app.run_forever()
-    from socketIO_client import SocketIO, BaseNamespace
-    import logging
-
-    #logging.basicConfig(level=logging.DEBUG)
-
-
-    '''
-    pip install sokcetio-client
-
-    note: it exists a trap in windows, you need to change "<your python path>\lib\site-packages\socketIO_client\transports.py", line 99
-            from:
-                assert response.content == b'ok'
-            into:
-                assert response.content == b'ok' or response.content == b'OK'
-    '''
-
-
-    class TestNamespace(BaseNamespace):
-
-        def on_connect(self):
-            print('socket io connected')
-
-        def on_disconnect(self):
-            print('socket io disconnected')
-
-        def on_error_msg(self):
-            print('error occured')
-            print(self)
-
-        def on_post_rx(self, msg):
-            print('get post msg')
-            print(msg)
-
-        def on_enqueued(self):
-            print('enqueued')
-            print(self)
-
-        def on_connect_error(self, msg):
-            print('connect error')
-            print(msg)
-
-
-    def send_data(namespace, app_eui, dev_eui, fport, payload):
-        print('send data')
-        namespace.emit('send_data', {'app_eui': app_eui, 'dev_eui': dev_eui, 'fport': fport, 'payload': payload})
-        print('data send')
-
-
-    print("SocketIO Message")
-    # app_eui = '0000000000000222'
-    # token = '8544fc943ceb44fd92a70fc6e247302f'
-    app_eui = 'be7a009fbe7a009d'
-    token = 'VMvAz5_N1Yi5i-8r5z9n9g'
-    dev_eui = 'be7a000000000300'
-    socket_io = SocketIO('127.0.0.1', 5000, params={'app_eui': app_eui, 'token': token})
-    print('what')
-    test_namespace = socket_io.define(TestNamespace, '/test')
-    # print('hi')
-    # send_data(test_namespace, app_eui, dev_eui, 2, '01')
-    socket_io.wait()
+    pass
