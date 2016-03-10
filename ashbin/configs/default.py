@@ -129,3 +129,8 @@ class DefaultConfig(object):
 
     # SocketIO secret key
     SECRET_KEY = 'ash-bin secret key'
+
+    # Ourself Server websocket infomation
+    OURSELF_APP_EUI = 'be7a009fbe7a0000'
+    OURSELF_TOKEN = 'pMJv-1cBL7XOEFQh9OoEHQ'
+    OURSELF_HOST = 'ws://183.230.40.231:8100'

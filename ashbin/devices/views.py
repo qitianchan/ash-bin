@@ -61,7 +61,7 @@ def devices_list():
         abort(404)
 
 
-# # 修改或添加顾客信息
+
 @devices.route('/device_profile/<device_id>', methods=['GET', 'POST'])
 @login_required
 def device_profile(device_id):
