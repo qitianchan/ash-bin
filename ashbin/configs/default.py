@@ -19,7 +19,7 @@ class DefaultConfig(object):
     _basedir = os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(
                             os.path.dirname(__file__)))))
 
-    DEBUG = True
+    DEBUG = False
     TESTING = False
 
     # Logs

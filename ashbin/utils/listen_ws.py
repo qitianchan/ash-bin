@@ -19,8 +19,6 @@ PORT = DefaultConfig.OURSELF_PORT
 
 
 def ws_listening():
-    print(u'开始监听消息')
-    # 一直连接直到连接成功
     try:
         socketio_cli = SocketIO(host=HOST, port=PORT, params={'app_eui': APP_EUI, 'token': TOKEN})
         test_namespace = socketio_cli.define(TestNamespace, '/test')

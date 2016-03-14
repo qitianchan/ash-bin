@@ -149,6 +149,6 @@ def test_message(message):
 app = create_app()
  
 if __name__ == '__main__':
-    app.debug = True
+    app.debug = False
     socketio.run(app, host='127.0.0.1', port=8099)
     # app.run()
