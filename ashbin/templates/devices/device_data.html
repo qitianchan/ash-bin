@@ -22,7 +22,11 @@
                         <td>{{ data['create_time'].strftime('%Y-%m-%d %H:%M:%S') }}</td>
                         <td>{{ data['occupancy'] }} %</td>
                         <td>{{ data['temperature'] }} ℃</td>
-                        <td>{{ data['electric_level'] }}</td>
+                            {%if data['electric_level'] >= 7 %}
+                            <td>100 %</td>
+                        {% else %}
+                            <td>{{ data['electric_level']* 15 }}</td>
+                        {% endif %}
                     </tr>
                     {% endfor %}
                 </tbody>

@@ -49,11 +49,15 @@ def devices_list():
             if d:
                 data['occupancy'] = d.occupancy
                 data['temperature'] = d.temperature
-                data['electric_level'] = d.electric_level
+                if d.electric_level >= 7:
+                    electric_level = 100
+                else:
+                    electric_level = d.electric_level * 15
+                data['electric_level'] = electric_level
             else:
-                data['occupancy'] = 0
-                data['temperature'] = 0
-                data['electric_level'] = 0
+                data['occupancy'] = '--'
+                data['temperature'] = '--'
+                data['electric_level'] = '--'
             devices_datas.append(data)
 
         return render_template('devices/devices_list.html', devices_datas=devices_datas, pagination=pagination)

@@ -27,7 +27,7 @@
                         <td>{{ device.garbage_can }}</td>
                         <td>{{ device.occupancy }} %</td>
                         <td>{{ device.temperature }} ℃</td>
-                        <td>{{ device.electric_level }}</td>
+                        <td>{{ device.electric_level }} %</td>
                         <td><a class="btn btn-info" href="{{ url_for('devices.device_profile', device_id = device.device_id) }}">编辑</a></td>
                     </tr>
                     {% endfor %}
