@@ -11,6 +11,7 @@ from ashbin.extensions import csrf, redis_store, admin, db
 from flask_admin.contrib.sqla import ModelView
 from wtforms.fields import SelectField
 from ashbin.devices.views import devices
+from ashbin.new_theme.views import theme
 from ashbin.garbage_cans.views import garbage_can
 from ashbin.map.views import map
 import websocket
@@ -74,7 +75,7 @@ def configure_blueprint(app):
     app.register_blueprint(devices, url_prefix=app.config['DEVICES_URL_PREFIX'])
     app.register_blueprint(garbage_can, url_prefix=app.config['GARBAGE_CAN_URL_PREFIX'])
     app.register_blueprint(map, url_prefix=app.config['MAP_URL_PREFIX'])
-
+    app.register_blueprint(theme)
 
 class MyView(ModelView):
     can_create = False
