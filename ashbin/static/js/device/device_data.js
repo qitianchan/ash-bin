@@ -53,7 +53,12 @@ $(document).ready(function(){
     var eventName = $('#device-mac').text().replace(/[ ]/g,"");
     //
     socket.on(eventName, function(msg) {
-
+        var electric_level = '--';
+        if (msg.electric_level >= 7) {
+            var electric_level = '100 %'
+        }else {
+            electric_level = msg.electric_level * 15 + ' %'
+        }
         $('#device-data').prepend("<tr>" +
             "<td>" + msg.create_time + "</td>" +
             "<td>" + msg.occupancy + " %</td>" +

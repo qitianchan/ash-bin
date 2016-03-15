@@ -28,7 +28,9 @@
                         <td>{{ device.occupancy }} %</td>
                         <td>{{ device.temperature }} ℃</td>
                         <td>{{ device.electric_level }} %</td>
-                        <td><a class="btn btn-info" href="{{ url_for('devices.device_profile', device_id = device.device_id) }}">编辑</a></td>
+                        <td><span><a class="btn btn-info" href="{{ url_for('devices.device_profile', device_id = device.device_id) }}">编辑</a></span>
+                            <span><button id="delete-device" class="btn btn-danger">删除</button></span>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -44,4 +46,8 @@
         </div>
 
  {{ pagination.links }}
+{% block scripts %}
+<script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+<script src="{{ url_for('static', filename='js/device/device_list.js') }}"></script>
+{% endblock %}
 {% endblock %}
