@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    {% block stylesheets %}
+    <!--icheck-->
+        <link href="{{ url_for('static', filename='js/iCheck/skins/minimal/minimal.css')}}" rel="stylesheet">
+        <link href="{{url_for('static', filename='js/iCheck/skins/square/square.css')}}" rel="stylesheet">
+        <link href="{{url_for('static', filename='js/iCheck/skins/square/square.cssjs/iCheck/skins/square/red.css')}}" rel="stylesheet">
+        <link href="{{url_for('static', filename='js/iCheck/skins/square/blue.css')}}" rel="stylesheet">
+
+        <!--dashboard calendar-->
+        <link href="{{url_for('static', filename='css/clndr.css')}}" rel="stylesheet">
+
+
+        <!--common-->
+        <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='css/style-responsive.css')}}" rel="stylesheet">
+
+
+
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="{{ url_for('static', filename='js/html5shiv.js')}}"></script>
+        <script src="{{ url_for('static', filename='js/respond.min.js')}}"></script>
+      <![endif]-->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}" >
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/pygments.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/midstation.css') }}">
+        {% endblock %}
+
+        {# for extra stylesheets. e.q. a template has to add something #}
+        {% block css %}
+        {% endblock %}
+    <title>ash-bin</title>
+</head>
+<body>
+
+    {% block navigation %}
+        {% include 'navigation.html' %}
+    {% endblock %}
+
+    <div class="container">
+            {% block messages %}
+                <div id="flashed-messages">
+                    {% include 'flashed_messages.html' %}
+                </div>
+            {% endblock %}
+
+            {% block content %}
+            {% endblock %}
+    </div> <!-- /container -->
+
+        {# standard javascript libs #}
+        {% block javascript %}
+        <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+        {% endblock %}
+
+
+        {# space for extra scripts - to use in other templates #}
+        {% block scripts %}
+        {% endblock %}
+
+</body>
+
+</html>

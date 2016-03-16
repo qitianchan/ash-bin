@@ -13,24 +13,24 @@
   <!--icheck-->
   <link href="{{ url_for('static', filename='js/iCheck/skins/minimal/minimal.css')}}" rel="stylesheet">
   <link href="{{url_for('static', filename='js/iCheck/skins/square/square.css')}}" rel="stylesheet">
-  <link href="js/iCheck/skins/square/square.cssjs/iCheck/skins/square/red.css" rel="stylesheet">
-  <link href="js/iCheck/skins/square/blue.css" rel="stylesheet">
+  <link href="{{url_for('static', filename='js/iCheck/skins/square/square.cssjs/iCheck/skins/square/red.css')}}" rel="stylesheet">
+  <link href="{{url_for('static', filename='js/iCheck/skins/square/blue.css')}}" rel="stylesheet">
 
   <!--dashboard calendar-->
-  <link href="css/clndr.css" rel="stylesheet">
+  <link href="{{url_for('static', filename='css/clndr.css')}}" rel="stylesheet">
 
 
   <!--common-->
-  <link href="css/style.css" rel="stylesheet">
-  <link href="css/style-responsive.css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/style-responsive.css')}}" rel="stylesheet">
 
 
 
 
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
-  <script src="js/html5shiv.js"></script>
-  <script src="js/respond.min.js"></script>
+  <script src="{{ url_for('static', filename='js/html5shiv.js')}}"></script>
+  <script src="{{ url_for('static', filename='js/respond.min.js')}}"></script>
   <![endif]-->
 </head>
 
@@ -42,11 +42,11 @@
 
         <!--logo and iconic logo start-->
         <div class="logo">
-            <a href="index.html"><img src="images/logo.png" alt=""></a>
+            <a href="index.html"><img src="{{ url_for('static', filename='images/logo.png') }}" alt=""></a>
         </div>
 
         <div class="logo-icon text-center">
-            <a href="index.html"><img src="images/logo_icon.png" alt=""></a>
+            <a href="index.html"><img src="{{ url_for('static', filename='images/logo_icon.png') }}" alt=""></a>
         </div>
         <!--logo and iconic logo end-->
 
@@ -55,7 +55,7 @@
             <!-- visible to small devices only -->
             <div class="visible-xs hidden-sm hidden-md hidden-lg">
                 <div class="media logged-user">
-                    <img alt="" src="images/photos/user-avatar.png" class="media-object">
+                    <img alt="" src="{{ url_for('static', filename='images/photos/user-avatar.png') }}" class="media-object">
                     <div class="media-body">
                         <h4><a href="#">John Doe</a></h4>
                         <span>"Hello There..."</span>
@@ -281,7 +281,7 @@
                             <ul class="dropdown-list normal-list">
                                 <li class="new">
                                     <a href="">
-                                        <span class="thumb"><img src="images/photos/user1.png" alt="" /></span>
+                                        <span class="thumb"><img src="{{ url_for('static', filename='images/photos/user1.png') }}" alt="" /></span>
                                         <span class="desc">
                                           <span class="name">John Doe <span class="badge badge-success">new</span></span>
                                           <span class="msg">Lorem ipsum dolor sit amet...</span>
@@ -290,7 +290,7 @@
                                 </li>
                                 <li>
                                     <a href="">
-                                        <span class="thumb"><img src="images/photos/user2.png" alt="" /></span>
+                                        <span class="thumb"><img src="{{ url_for('static', filename='images/photos/user2.png') }}" alt="" /></span>
                                         <span class="desc">
                                           <span class="name">Jonathan Smith</span>
                                           <span class="msg">Lorem ipsum dolor sit amet...</span>
@@ -299,7 +299,7 @@
                                 </li>
                                 <li>
                                     <a href="">
-                                        <span class="thumb"><img src="images/photos/user3.png" alt="" /></span>
+                                        <span class="thumb"><img src="{{ url_for('static', filename='images/photos/user3.png') }}" alt="" /></span>
                                         <span class="desc">
                                           <span class="name">Jane Doe</span>
                                           <span class="msg">Lorem ipsum dolor sit amet...</span>
@@ -308,7 +308,7 @@
                                 </li>
                                 <li>
                                     <a href="">
-                                        <span class="thumb"><img src="images/photos/user4.png" alt="" /></span>
+                                        <span class="thumb"><img src="{{ url_for('static', filename='images/photos/user4.png') }}" alt="" /></span>
                                         <span class="desc">
                                           <span class="name">Mark Henry</span>
                                           <span class="msg">Lorem ipsum dolor sit amet...</span>
@@ -317,7 +317,7 @@
                                 </li>
                                 <li>
                                     <a href="">
-                                        <span class="thumb"><img src="images/photos/user5.png" alt="" /></span>
+                                        <span class="thumb"><img src="{{ url_for('static', filename='images/photos/user5.png') }}" alt="" /></span>
                                         <span class="desc">
                                           <span class="name">Jim Doe</span>
                                           <span class="msg">Lorem ipsum dolor sit amet...</span>
@@ -370,7 +370,7 @@
                     </li>
                     <li>
                         <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            <img src="images/photos/user-avatar.png" alt="" />
+                            <img src="{{ url_for('static', filename='images/photos/user-avatar.png') }}" alt="" />
                             John Doe
                             <span class="caret"></span>
                         </a>
@@ -476,7 +476,7 @@
                 <div class="col-md-4">
                     <div class="wdgt-profile">
                         <div class="profile">
-                            <img src="images/gallery/wdgt-img.jpg" alt=""/>
+                            <img src="{{ url_for('static', filename='images/gallery/wdgt-img.jpg') }}" alt=""/>
                             <div class="profile-social">
                                 <a href="#" ><i class="fa fa-pinterest"></i></a>
                                 <a href="#" ><i class="fa fa-twitter"></i></a>
@@ -523,10 +523,10 @@
                 <div class="col-md-4">
                     <div class="panel widget-info-one">
                         <div class="avatar-img">
-                            <img src="images/gallery/image3.jpg" alt=""/>
+                            <img src="{{ url_for('static', filename='images/gallery/image3.jpg') }}" alt=""/>
                         </div>
                         <div class="inner">
-                            <div class="avatar"><img alt="" src="images/photos/userprofile.png"></div>
+                            <div class="avatar"><img alt="" src="{{ url_for('static', filename='images/photos/userprofile.png') }}"></div>
                             <h5>Margarita Rose</h5>
                             <span class="subtitle">
                                 Praesent magna nunc, tincidunt pretium.
@@ -638,7 +638,7 @@
                                 <div class="row">
                                     <div class="col-xs-3">
                                         <div class="avatar">
-                                            <img src="images/photos/user2.png" alt=""/>
+                                            <img src="{{ url_for('static', filename='images/photos/user2.png') }}" alt=""/>
                                         </div>
                                     </div>
                                     <div class="col-xs-6">
@@ -657,7 +657,7 @@
                                 <div class="row">
                                     <div class="col-xs-3">
                                         <div class="avatar">
-                                            <img src="images/photos/user1.png" alt=""/>
+                                            <img src="{{ url_for('static', filename='images/photos/user1.png') }}" alt=""/>
                                         </div>
                                     </div>
                                     <div class="col-xs-6">
@@ -676,7 +676,7 @@
                                 <div class="row">
                                     <div class="col-xs-3">
                                         <div class="avatar">
-                                            <img src="images/photos/user3.png" alt=""/>
+                                            <img src="{{ url_for('static', filename='images/photos/user3.png') }}" alt=""/>
                                         </div>
                                     </div>
                                     <div class="col-xs-6">
@@ -695,7 +695,7 @@
                                 <div class="row">
                                     <div class="col-xs-3">
                                         <div class="avatar">
-                                            <img src="images/photos/user4.png" alt=""/>
+                                            <img src="{{ url_for('static', filename='images/photos/user4.png') }}" alt=""/>
                                         </div>
                                     </div>
                                     <div class="col-xs-6">
@@ -714,7 +714,7 @@
                                 <div class="row">
                                     <div class="col-xs-3">
                                         <div class="avatar">
-                                            <img src="images/photos/user1.png" alt=""/>
+                                            <img src="{{ url_for('static', filename='images/photos/user1.png') }}" alt=""/>
                                         </div>
                                     </div>
                                     <div class="col-xs-6">
@@ -747,7 +747,7 @@
                         <div class="panel-body">
                             <ul class="chats cool-chat">
                                 <li class="in">
-                                    <img src="images/photos/user1.png" alt="" class="avatar">
+                                    <img src="{{ url_for('static', filename='images/photos/user1.png') }}" alt="" class="avatar">
                                     <div class="message">
                                         <span class="arrow"></span>
                                         <a class="name" href="#">Jone Doe</a>
@@ -758,7 +758,7 @@
                                     </div>
                                 </li>
                                 <li class="out">
-                                    <img src="images/photos/user2.png" alt="" class="avatar">
+                                    <img src="{{ url_for('static', filename='images/photos/user2.png') }}" alt="" class="avatar">
                                     <div class="message">
                                         <span class="arrow"></span>
                                         <a class="name" href="#">Margarita Rose</a>
@@ -769,7 +769,7 @@
                                     </div>
                                 </li>
                                 <li class="in">
-                                    <img src="images/photos/user1.png" alt="" class="avatar">
+                                    <img src="{{ url_for('static', filename='images/photos/user1.png') }}" alt="" class="avatar">
                                     <div class="message">
                                         <span class="arrow"></span>
                                         <a class="name" href="#">Jone Doe</a>
@@ -780,7 +780,7 @@
                                     </div>
                                 </li>
                                 <li class="out">
-                                    <img src="images/photos/user2.png" alt="" class="avatar">
+                                    <img src="{{ url_for('static', filename='images/photos/user2.png') }}" alt="" class="avatar">
                                     <div class="message">
                                         <span class="arrow"></span>
                                         <a class="name" href="#">Margarita Rose</a>
@@ -791,7 +791,7 @@
                                     </div>
                                 </li>
                                 <li class="in">
-                                    <img src="images/photos/user1.png" alt="" class="avatar">
+                                    <img src="{{ url_for('static', filename='images/photos/user1.png') }}" alt="" class="avatar">
                                     <div class="message">
                                         <span class="arrow"></span>
                                         <a class="name" href="#">Jone Doe</a>
@@ -802,7 +802,7 @@
                                     </div>
                                 </li>
                                 <li class="out">
-                                    <img src="images/photos/user2.png" alt="" class="avatar">
+                                    <img src="{{ url_for('static', filename='images/photos/user2.png') }}" alt="" class="avatar">
                                     <div class="message">
                                         <span class="arrow"></span>
                                         <a class="name" href="#">Margarita Rose</a>
@@ -848,7 +848,7 @@
                         <div class="panel-body">
                             <div class="media usr-info">
                                 <a href="#" class="pull-left">
-                                    <img class="thumb" src="images/photos/user2.png" alt=""/>
+                                    <img class="thumb" src="{{ url_for('static', filename='images/photos/user2.png') }}" alt=""/>
                                 </a>
                                 <div class="media-body">
                                     <h4 class="media-heading">Mila Watson</h4>
@@ -897,37 +897,37 @@
 </section>
 
 <!-- Placed js at the end of the document so the pages load faster -->
-<script src="js/jquery-1.10.2.min.js"></script>
-<script src="js/jquery-ui-1.9.2.custom.min.js"></script>
-<script src="js/jquery-migrate-1.2.1.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/modernizr.min.js"></script>
-<script src="js/jquery.nicescroll.js"></script>
+<script src="{{ url_for('static', filename='js/jquery-1.10.2.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery-ui-1.9.2.custom.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery-migrate-1.2.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/modernizr.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.nicescroll.js') }}"></script>
 
 <!--easy pie chart-->
-<script src="js/easypiechart/jquery.easypiechart.js"></script>
-<script src="js/easypiechart/easypiechart-init.js"></script>
+<script src="{{ url_for('static', filename='js/easypiechart/jquery.easypiechart.js') }}"></script>
+<script src="{{ url_for('static', filename='js/easypiechart/easypiechart-init.js') }}"></script>
 
 <!--Sparkline Chart-->
-<script src="js/sparkline/jquery.sparkline.js"></script>
-<script src="js/sparkline/sparkline-init.js"></script>
+<script src="{{ url_for('static', filename='js/sparkline/jquery.sparkline.js') }}"></script>
+<script src="{{ url_for('static', filename='js/sparkline/sparkline-init.js') }}"></script>
 
 <!--icheck -->
-<script src="js/iCheck/jquery.icheck.js"></script>
-<script src="js/icheck-init.js"></script>
+<script src="{{ url_for('static', filename='js/iCheck/jquery.icheck.js') }}"></script>
+<script src="{{ url_for('static', filename='js/icheck-init.js') }}"></script>
 
 <!-- jQuery Flot Chart-->
-<script src="js/flot-chart/jquery.flot.js"></script>
-<script src="js/flot-chart/jquery.flot.tooltip.js"></script>
-<script src="js/flot-chart/jquery.flot.resize.js"></script>
-<script src="js/flot-chart/jquery.flot.pie.resize.js"></script>
-<script src="js/flot-chart/jquery.flot.selection.js"></script>
-<script src="js/flot-chart/jquery.flot.stack.js"></script>
-<script src="js/flot-chart/jquery.flot.time.js"></script>
-<script src="js/main-chart.js"></script>
+<script src="{{ url_for('static', filename='js/flot-chart/jquery.flot.js') }}"></script>
+<script src="{{ url_for('static', filename='js/flot-chart/jquery.flot.tooltip.js') }}"></script>
+<script src="{{ url_for('static', filename='js/flot-chart/jquery.flot.resize.js') }}"></script>
+<script src="{{ url_for('static', filename='js/flot-chart/jquery.flot.pie.resize.js') }}"></script>
+<script src="{{ url_for('static', filename='js/flot-chart/jquery.flot.selection.js') }}"></script>
+<script src="{{ url_for('static', filename='js/flot-chart/jquery.flot.stack.js') }}"></script>
+<script src="{{ url_for('static', filename='js/flot-chart/jquery.flot.time.js') }}"></script>
+<script src="{{ url_for('static', filename='js/main-chart.js') }}"></script>
 
 <!--common scripts for all pages-->
-<script src="js/scripts.js"></script>
+<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 
 
 </body>

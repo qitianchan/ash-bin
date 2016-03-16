@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 __author__ = 'qitian'
-from flask import Blueprint, redirect, request, url_for, render_template, abort, flash
+from flask import Blueprint, redirect, request, url_for, render_template, abort, flash, session
 from flask_login import login_required, current_user
 from jinja2 import TemplateNotFound
 from sqlalchemy.exc import IntegrityError
