@@ -74,42 +74,44 @@ def cook_rx_message(message):
 
 def get_info(cx, mac):
     exe = "select id, garbage_can_id from device where mac='%s'" % mac
-    res = cx.execute(exe).fetchone()
-    if res:
-        if res[1]:
-            bt_exe = "select bottom_height, top_height from garbage_can where id=%s" % res[1]
-            bottom_top_height = cx.execute(bt_exe).fetchone()
-            if bottom_top_height:
-                t = (res[0], bottom_top_height[0], bottom_top_height[1])
-                return t
-        else:
-            return (res[0], None, None)
-    else:
-        return None
+    # res = cx.execute(exe).fetchone()
+    dev_info = cx.execute(exe).fetchall()
+    if dev_info:
+        info = []
+        for res in dev_info:
+            if res[1]:
+                bt_exe = "select bottom_height, top_height from garbage_can where id=%s" % res[1]
+                bottom_top_height = cx.execute(bt_exe).fetchone()
+                if bottom_top_height:
+                    t = (res[0], bottom_top_height[0], bottom_top_height[1])
+                    info.append(t)
+                else:
+                    info.append((res[0], None, None))
+        return info
 
 
 def insert_data(cx, data):
     mac = data[0:8].upper()
-    res = get_info(cx, mac)
-    if res:
-        device_id = res[0]
-        bottom_height = res[1]
-        top_height = res[2]
-        now = datetime.now()
-        if device_id:
-            if bottom_height and top_height and bottom_height > top_height:
-                info = parse_data(data, bottom_height, top_height)
-                ins_data = (device_id, data, info[0], info[1], info[2], now)
-            else:
-                ins_data = (device_id, data, 0, 0, 0, now)
+    infos = get_info(cx, mac)
+    for res in infos:
+        if res:
+            device_id = res[0]
+            bottom_height = res[1]
+            top_height = res[2]
+            now = datetime.now()
+            if device_id:
+                if bottom_height and top_height and bottom_height > top_height:
+                    info = parse_data(data, bottom_height, top_height)
+                    ins_data = (device_id, data, info[0], info[1], info[2], now)
+                else:
+                    ins_data = (device_id, data, 0, 0, 0, now)
 
-            cx.execute('insert into data values (?,?,?,?,?,?)', ins_data)
-            cx.commit()
-
-            # emit new message to web
-            socketio.emit(mac, {'occupancy': ins_data[2], 'temperature': ins_data[3],
-                                'electric_level': ins_data[4], 'create_time': now.strftime('%Y-%m-%d %H:%M:%S')},
-                          namespace='/device')
+                cx.execute('insert into data values (?,?,?,?,?,?)', ins_data)
+                cx.commit()
+                # emit new message to web
+                socketio.emit(mac, {'occupancy': ins_data[2], 'temperature': ins_data[3],
+                                    'electric_level': ins_data[4], 'create_time': now.strftime('%Y-%m-%d %H:%M:%S')},
+                              namespace='/device')
 
 
 def parse_data(raw_data, bottom_height, top_height):
@@ -150,4 +152,6 @@ def on_msg(ws, message):
     print(message)
 
 if __name__ == '__main__':
-    pass
+    data = u'0062b8281f460e0715003582'
+    cx = sqlite3.connect(DefaultConfig.DATABASE_PATH)
+    insert_data(cx, data)
