@@ -39,7 +39,7 @@ class DefaultConfig(object):
     # SQLALCHEMY_DATABASE_URI = 'sqlite:///' + _basedir + '/' + \
     #                           'test.sqlite'
     # This will print all SQL statements
-    SQLALCHEMY_ECHO = True
+    SQLALCHEMY_ECHO = False
 
     # Security
     # This is the secret key that is used for session signing.
