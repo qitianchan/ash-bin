@@ -11,7 +11,7 @@ from sqlalchemy import and_
 class Data(db.Model):
     __tablename__ = 'data'
     # id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    device_id = db.Column(db.Integer, db.ForeignKey('device.id'), nullable=False)
+    device_id = db.Column(db.Integer, db.ForeignKey('device.id'))
     data = db.Column(db.VARCHAR(255))
     occupancy = db.Column(db.Integer, default=0)            # 垃圾占用率
     temperature = db.Column(db.Integer)                     # 温度
