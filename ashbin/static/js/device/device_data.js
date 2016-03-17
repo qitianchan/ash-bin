@@ -55,15 +55,15 @@ $(document).ready(function(){
     socket.on(eventName, function(msg) {
         var electric_level = '--';
         if (msg.electric_level >= 7) {
-            var electric_level = '100 %'
+            var electric_level = 100
         }else {
-            electric_level = msg.electric_level * 15 + ' %'
+            electric_level = msg.electric_level * 15
         }
         $('#device-data').prepend("<tr>" +
             "<td>" + msg.create_time + "</td>" +
             "<td>" + msg.occupancy + " %</td>" +
             "<td>" + msg.temperature + " ℃</td>" +
-            "<td>" + msg.electric_level + "</td></tr>");
+            "<td>" + electric_level + " %</td></tr>");
 
         date.push(msg.create_time);
         data.push(msg.occupancy);

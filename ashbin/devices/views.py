@@ -65,6 +65,18 @@ def devices_list():
         abort(404)
 
 
+@devices.route('/device/delete/<device_id>', methods=['GET', 'POST'])
+@login_required
+def delete_device(device_id):
+    device = Device.query.filter_by(id=device_id).first()
+    if device:
+        try:
+            device.delete()
+        except Exception as e:
+            flash(e.message, category='error')
+            raise e
+    return redirect(url_for('devices.devices_list'))
+
 
 @devices.route('/device_profile/<device_id>', methods=['GET', 'POST'])
 @login_required
