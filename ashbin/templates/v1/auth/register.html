@@ -32,7 +32,9 @@
 
         <div class="login-wrap">
             <p> Enter your account details below</p>
-			{{ form.username(placeholder=form.username.label.text, class_='form-control error', autofocus=true, required=true, id='username') }}
+            <div class="form-group">
+                {{ form.username(placeholder=form.username.label.text, class_='form-control error', autofocus=true, required=true, id='username') }}
+            </div>
 			{{ form.password(placeholder=form.password.label.text, class_='form-control', autofocus=true, required=true, id='password') }}
 			{{ form.confirm_password(placeholder=form.confirm_password.label.text, class_='form-control', autofocus=true,
 			id='confirm_password', required=true)}}

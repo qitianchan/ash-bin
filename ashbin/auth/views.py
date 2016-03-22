@@ -30,7 +30,7 @@ def register():
             try:
                 user = form.save()
             except IntegrityError as e:
-                return ajax_response(422, message='User name is exit')
+                return ajax_response(422, message='User name is existed')
             login_user(user)
             return redirect(url_for('devices.devices_list'))
     try:
