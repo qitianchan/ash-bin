@@ -10,6 +10,7 @@ from ashbin.extensions import socketio
 from flask_socketio import emit
 from flask import current_app
 from socketIO_client import SocketIO, BaseNamespace
+from threading import Thread
 
 url = DefaultConfig.LORIOT_URL
 HOST = DefaultConfig.OURSELF_HOST
@@ -19,6 +20,25 @@ PORT = DefaultConfig.OURSELF_PORT
 
 
 def ws_listening():
+    loriot_thread = Thread(target=loriot_listening)
+    # loriot_thread.setDaemon(True)
+    loriot_thread.start()
+    userver_thread = Thread(target=userver_listening)
+    # userver_thread.setDaemon(True)
+    userver_thread.start()
+
+
+def loriot_listening():
+    try:
+        # simulate(r)
+        # socketio_cli = SocketIO()
+        ws_app = websocket.WebSocketApp(url=url, on_message=_on_message, on_open=_on_open)
+        ws_app.run_forever()
+    except Exception as e:
+        ws_listening()
+
+
+def userver_listening():
     try:
         socketio_cli = SocketIO(host=HOST, port=PORT, params={'app_eui': APP_EUI, 'token': TOKEN})
         test_namespace = socketio_cli.define(TestNamespace, '/test')
@@ -26,6 +46,20 @@ def ws_listening():
 
     except Exception as e:
         ws_listening()
+
+def _on_message(ws, message):
+    print(message)
+    cx = sqlite3.connect(DefaultConfig.DATABASE_PATH)
+    t = json.loads(message)
+    # if t['h'] and t['data'][0:8] == '0027a208':
+    if not hasattr(t, 'h'):
+        data = t['data']
+        if len(data) >= 24:
+            insert_data(cx, data)
+
+
+def _on_open(ws):
+    print(u'连接websocket成功')
 
 
 class TestNamespace(BaseNamespace):
@@ -74,44 +108,42 @@ def cook_rx_message(message):
 
 def get_info(cx, mac):
     exe = "select id, garbage_can_id from device where mac='%s'" % mac
-    # res = cx.execute(exe).fetchone()
-    dev_info = cx.execute(exe).fetchall()
-    if dev_info:
-        info = []
-        for res in dev_info:
-            if res[1]:
-                bt_exe = "select bottom_height, top_height from garbage_can where id=%s" % res[1]
-                bottom_top_height = cx.execute(bt_exe).fetchone()
-                if bottom_top_height:
-                    t = (res[0], bottom_top_height[0], bottom_top_height[1])
-                    info.append(t)
-                else:
-                    info.append((res[0], None, None))
-        return info
+    res = cx.execute(exe).fetchone()
+    if res:
+        if res[1]:
+            bt_exe = "select bottom_height, top_height from garbage_can where id=%s" % res[1]
+            bottom_top_height = cx.execute(bt_exe).fetchone()
+            if bottom_top_height:
+                t = (res[0], bottom_top_height[0], bottom_top_height[1])
+                return t
+        else:
+            return (res[0], None, None)
+    else:
+        return None
 
 
 def insert_data(cx, data):
     mac = data[0:8].upper()
-    infos = get_info(cx, mac)
-    for res in infos:
-        if res:
-            device_id = res[0]
-            bottom_height = res[1]
-            top_height = res[2]
-            now = datetime.now()
-            if device_id:
-                if bottom_height and top_height and bottom_height > top_height:
-                    info = parse_data(data, bottom_height, top_height)
-                    ins_data = (device_id, data, info[0], info[1], info[2], now)
-                else:
-                    ins_data = (device_id, data, 0, 0, 0, now)
+    res = get_info(cx, mac)
+    if res:
+        device_id = res[0]
+        bottom_height = res[1]
+        top_height = res[2]
+        now = datetime.now()
+        if device_id:
+            if bottom_height and top_height and bottom_height > top_height:
+                info = parse_data(data, bottom_height, top_height)
+                ins_data = (device_id, data, info[0], info[1], info[2], now)
+            else:
+                ins_data = (device_id, data, 0, 0, 0, now)
 
-                cx.execute('insert into data values (?,?,?,?,?,?)', ins_data)
-                cx.commit()
-                # emit new message to web
-                socketio.emit(mac, {'occupancy': ins_data[2], 'temperature': ins_data[3],
-                                    'electric_level': ins_data[4], 'create_time': now.strftime('%Y-%m-%d %H:%M:%S')},
-                              namespace='/device')
+            cx.execute('insert into data values (?,?,?,?,?,?)', ins_data)
+            cx.commit()
+
+            # emit new message to web
+            socketio.emit(mac, {'occupancy': ins_data[2], 'temperature': ins_data[3],
+                                'electric_level': ins_data[4], 'create_time': now.strftime('%Y-%m-%d %H:%M:%S')},
+                          namespace='/device')
 
 
 def parse_data(raw_data, bottom_height, top_height):
@@ -152,6 +184,4 @@ def on_msg(ws, message):
     print(message)
 
 if __name__ == '__main__':
-    data = u'0062b8281f460e0715003582'
-    cx = sqlite3.connect(DefaultConfig.DATABASE_PATH)
-    insert_data(cx, data)
+    loriot_listening()
