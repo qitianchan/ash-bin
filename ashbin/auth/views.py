@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from flask import Blueprint, request, redirect, flash, url_for
+from flask import Blueprint, request, redirect, flash, url_for, jsonify
 from flask import render_template
 from jinja2 import TemplateNotFound
 from flask import abort
@@ -15,25 +15,37 @@ from ashbin.configs.default import DefaultConfig
 from random import randint
 from ashbin.extensions import redis_store
 from redis import Redis, ResponseError
-
+from sqlalchemy.exc import IntegrityError
 
 AUTH_KEY_EXPIRE = getattr(DefaultConfig, 'AUTH_KEY_EXPIRE', 5)            # 微信验证码过去时间（min）
 auth = Blueprint('auth', __name__, template_folder='templates')
 
+@csrf.exempt
 @auth.route('/auth/register', methods=["GET", "POST"])
 def register():
     form = RegisterForm(request.form)
     if request.method == 'POST':
         if form.validate_on_submit():
             # if form.validate_username():
-            user = form.save()
+            try:
+                user = form.save()
+            except IntegrityError as e:
+                return ajax_response(422, message='User name is exit')
             login_user(user)
-            flash("Thanks for registering. %s" % current_user.username, "success")
             return redirect(url_for('devices.devices_list'))
     try:
         return render_template('auth/register.html', title='Register', form=form)
     except TemplateNotFound:
         abort(404)
+
+
+def ajax_response(status_code, message='success', data=None):
+    res = {}
+    res['message'] = message
+    res['data'] = data
+    response = jsonify(res)
+    response.status_code = status_code
+    return response
 
 @csrf.exempt
 @auth.route('/', methods=['GET', 'POST'])
@@ -42,17 +54,22 @@ def login():
     form = LoginForm()
     if request.method == 'POST':
         if form.validate_on_submit():
+
             user, authenticated = User.authenticate(form.username.data,
                                                 form.password.data)
 
             if user and authenticated:
                 login_user(user, remember=form.remember_me.data)
-                flash('Logged successfully %s' % current_user.username, 'success')
-                return redirect(url_for('devices.devices_list'))
+                from flask import session
+                s = session
+                # return redirect(url_for('auth.login'))
+                return url_for('devices.devices_list')
+            else:
+                return {'message': 'not'}
 
-            flash("Wrong Username or Password.", "danger")
-            print 'Wrong Username'
     return render_template('auth/login.html', title='Sign In', form=form)
+
+
 
 
 @auth.route('/auth/logout')

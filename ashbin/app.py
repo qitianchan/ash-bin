@@ -55,7 +55,7 @@ elif async_mode == 'gevent':
 def create_app(config=None):
     """Creates the app."""
 
-    app = Flask(__name__, template_folder='templates/v0')
+    app = Flask(__name__, template_folder='templates/v1')
 
     # Use the default config and override it afterwards
     app.config.from_object('ashbin.configs.default.DefaultConfig')
@@ -75,7 +75,7 @@ def configure_blueprint(app):
     app.register_blueprint(devices, url_prefix=app.config['DEVICES_URL_PREFIX'])
     app.register_blueprint(garbage_can, url_prefix=app.config['GARBAGE_CAN_URL_PREFIX'])
     app.register_blueprint(map, url_prefix=app.config['MAP_URL_PREFIX'])
-    app.register_blueprint(theme)
+    # app.register_blueprint(theme)
 
 class MyView(ModelView):
     can_create = False
@@ -150,6 +150,7 @@ def test_message(message):
 app = create_app()
  
 if __name__ == '__main__':
-    app.debug = False
+    app.debug = True
+
     socketio.run(app, host='127.0.0.1', port=8099)
     # app.run()

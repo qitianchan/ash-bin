@@ -6,7 +6,7 @@ from jinja2 import TemplateNotFound
 from ashbin.devices.models import Device
 from sqlalchemy import desc
 from flask import jsonify
-theme = Blueprint('theme', __name__, template_folder='templates', static_folder='static')
+theme = Blueprint('theme', __name__, static_folder='static')
 
 
 @theme.route('/theme')
@@ -16,3 +16,7 @@ def index():
         return render_template('index.html')
     except TemplateNotFound:
         abort(404)
+
+@theme.route('/login')
+def login():
+    return render_template('login.html')

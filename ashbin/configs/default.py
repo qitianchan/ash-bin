@@ -19,7 +19,7 @@ class DefaultConfig(object):
     _basedir = os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(
                             os.path.dirname(__file__)))))
 
-    DEBUG = False
+    DEBUG = True
     TESTING = False
 
     # Logs
@@ -39,12 +39,12 @@ class DefaultConfig(object):
     # SQLALCHEMY_DATABASE_URI = 'sqlite:///' + _basedir + '/' + \
     #                           'test.sqlite'
     # This will print all SQL statements
-    SQLALCHEMY_ECHO = True
+    SQLALCHEMY_ECHO = False
 
     # Security
     # This is the secret key that is used for session signing.
     # You can generate a secure key with os.urandom(24)
-    SECRET_KEY = 'secret key'
+    SECRET_KEY = '\x99A\x8f\x0f\xe5tG\xe6f\t\xfe\xe1Y\xe9X,\xb6\xdf,\xea\x12q\xc9\xc5'
 
     # Protection against form post fraud
     WTF_CSRF_ENABLED = True

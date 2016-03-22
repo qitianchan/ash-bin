@@ -54,7 +54,7 @@ elif async_mode == 'gevent':
 def create_app(config=None):
     """Creates the app."""
 
-    app = Flask(__name__, template_folder='ashbin/templates', static_folder='ashbin/static')
+    app = Flask(__name__, template_folder='ashbin/templates/v1', static_folder='ashbin/static')
 
     # Use the default config and override it afterwards
     app.config.from_object('ashbin.configs.default.DefaultConfig')

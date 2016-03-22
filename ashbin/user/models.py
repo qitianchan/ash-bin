@@ -75,7 +75,7 @@ class User(db.Model):
         return self.password == sha1_obj.hexdigest()
 
     @classmethod
-    def create_user(cls,username, password):
+    def create_user(cls, username, password):
         salt = create_salt()
         sha1_obj = sha1()
         sha1_obj.update(password+salt)
@@ -114,7 +114,7 @@ class User(db.Model):
         db.session.add(self)
         try:
             db.session.commit()
-        except Exception, e:
+        except Exception as e:
             db.session.rollback()
             raise e
 

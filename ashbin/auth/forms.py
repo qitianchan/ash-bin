@@ -15,11 +15,11 @@ is_username = regexp(USERNAME_RE,
 
 
 class LoginForm(Form):
-    username = StringField(u'用户名', [Length(min=4, max=25)])
-    password = PasswordField(u'密码', [Length(min=6, max=25)])
-    remember_me = BooleanField(u'记住我', default=False)
+    username = StringField(u'User Name', [Length(min=4, max=25)])
+    password = PasswordField(u'Password', [Length(min=6, max=25)])
+    remember_me = BooleanField(u'Remember Me', default=False)
 
-    submit = SubmitField(u'登 录')
+    submit = SubmitField(u'Login')
 
     def auth(self):
         users = User.query.filter_by(username=self.username.data).all()
@@ -31,18 +31,17 @@ class LoginForm(Form):
 
 
 class RegisterForm(Form):
-    username = StringField(u"用户名", validators=[
-        DataRequired(message=u"请填入用户名")])
+    username = StringField(u"User Name", validators=[
+        DataRequired(message=u"Input your user name")])
 
-    password = PasswordField(u'密码', validators=[
+    password = PasswordField(u'Password', validators=[
         InputRequired(),
-        EqualTo('confirm_password', message=u'两次密码不一致')])
+        EqualTo('confirm_password', message=u'Re-type password do not match password')])
 
-    confirm_password = PasswordField(u'确认密码')
+    confirm_password = PasswordField(u'Re-type password')
+    email = StringField(u'Email')
 
-    submit = SubmitField(u'注册')
-
+    submit = SubmitField(u'Register')
 
     def save(self):
-
         return User.create_user(self.username.data, self.password.data)

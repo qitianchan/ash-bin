@@ -10,6 +10,7 @@ from ashbin.extensions import socketio
 from flask_socketio import emit
 from flask import current_app
 from socketIO_client import SocketIO, BaseNamespace
+from threading import Thread
 
 url = DefaultConfig.LORIOT_URL
 HOST = DefaultConfig.OURSELF_HOST
@@ -19,6 +20,25 @@ PORT = DefaultConfig.OURSELF_PORT
 
 
 def ws_listening():
+    loriot_thread = Thread(target=loriot_listening)
+    # loriot_thread.setDaemon(True)
+    loriot_thread.start()
+    userver_thread = Thread(target=userver_listening)
+    # userver_thread.setDaemon(True)
+    userver_thread.start()
+
+
+def loriot_listening():
+    try:
+        # simulate(r)
+        # socketio_cli = SocketIO()
+        ws_app = websocket.WebSocketApp(url=url, on_message=_on_message, on_open=_on_open)
+        ws_app.run_forever()
+    except Exception as e:
+        ws_listening()
+
+
+def userver_listening():
     try:
         socketio_cli = SocketIO(host=HOST, port=PORT, params={'app_eui': APP_EUI, 'token': TOKEN})
         test_namespace = socketio_cli.define(TestNamespace, '/test')
@@ -26,6 +46,20 @@ def ws_listening():
 
     except Exception as e:
         ws_listening()
+
+def _on_message(ws, message):
+    print(message)
+    cx = sqlite3.connect(DefaultConfig.DATABASE_PATH)
+    t = json.loads(message)
+    # if t['h'] and t['data'][0:8] == '0027a208':
+    if not hasattr(t, 'h'):
+        data = t['data']
+        if len(data) >= 24:
+            insert_data(cx, data)
+
+
+def _on_open(ws):
+    print(u'连接websocket成功')
 
 
 class TestNamespace(BaseNamespace):

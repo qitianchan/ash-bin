@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="ThemeBucket">
+    <link rel="shortcut icon" href="#" type="image/png">
+
+    <title>Register</title>
+
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style-responsive.css') }}" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="{{ url_for('static', filename='js/html5shiv.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/respond.min.js') }}"></script>
+    <![endif]-->
+</head>
+
+<body class="login-body">
+
+<div class="container">
+		<form class="cmxform adminex-form form-signin" id="signupForm" action="">
+		{{ form.csrf_token }}
+        <div class="form-signin-heading text-center">
+            <h1 class="sign-title">Registration</h1>
+            <img src="{{ url_for('static', filename='images/login-logo.png') }}" alt=""/>
+        </div>
+
+
+        <div class="login-wrap">
+            <p> Enter your account details below</p>
+			{{ form.username(placeholder=form.username.label.text, class_='form-control error', autofocus=true, required=true, id='username') }}
+			{{ form.password(placeholder=form.password.label.text, class_='form-control', autofocus=true, required=true, id='password') }}
+			{{ form.confirm_password(placeholder=form.confirm_password.label.text, class_='form-control', autofocus=true,
+			id='confirm_password', required=true)}}
+            <label class="checkbox">
+                <input type="checkbox" id="agree" value="agree this condition"> I agree to the Terms of Service and Privacy Policy
+            </label>
+            <button type="submit" class="btn btn-lg btn-login btn-block">
+                <i class="fa fa-check"></i>
+            </button>
+
+            <div class="registration">
+                Already Registered.
+                <a href="{{ url_for('auth.login') }}" class="">
+                    Login
+                </a>
+            </div>
+
+        </div>
+
+    </form>
+</div>
+
+
+
+<!-- Placed js at the end of the document so the pages load faster -->
+
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="{{ url_for('static', filename='js/jquery-1.10.2.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/modernizr.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.validate.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/app/auth/register.js') }}"></script>
+
+</body>
+</html>
