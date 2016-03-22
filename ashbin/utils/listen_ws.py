@@ -59,7 +59,7 @@ def _on_message(ws, message):
 
 
 def _on_open(ws):
-    print(u'连接websocket成功')
+    print(u'connect loriot webserver successfully')
 
 
 class TestNamespace(BaseNamespace):
