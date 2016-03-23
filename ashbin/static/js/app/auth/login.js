@@ -11,6 +11,12 @@ $(document).ready(function()
                     success: function(data) {
                         console.log(data);
                         window.location.href = data;
+                    },
+                    error: function(res) {
+                        var message = res.responseJSON.message;
+                        var username = $('#username');
+                        username.prev('label').remove();
+                        username.before('<label class="error">' + message + '</label>')
                     }
                 });
                 return false;

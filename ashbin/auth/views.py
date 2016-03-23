@@ -16,6 +16,7 @@ from random import randint
 from ashbin.extensions import redis_store
 from redis import Redis, ResponseError
 from sqlalchemy.exc import IntegrityError
+from ashbin.utils.helpers import ajax_response
 
 AUTH_KEY_EXPIRE = getattr(DefaultConfig, 'AUTH_KEY_EXPIRE', 5)            # 微信验证码过去时间（min）
 auth = Blueprint('auth', __name__, template_folder='templates')
@@ -32,20 +33,12 @@ def register():
             except IntegrityError as e:
                 return ajax_response(422, message='User name is existed')
             login_user(user)
-            return redirect(url_for('devices.devices_list'))
+            return url_for('map.devices_on_map')
     try:
         return render_template('auth/register.html', title='Register', form=form)
     except TemplateNotFound:
         abort(404)
 
-
-def ajax_response(status_code, message='success', data=None):
-    res = {}
-    res['message'] = message
-    res['data'] = data
-    response = jsonify(res)
-    response.status_code = status_code
-    return response
 
 @csrf.exempt
 @auth.route('/', methods=['GET', 'POST'])
@@ -60,16 +53,11 @@ def login():
 
             if user and authenticated:
                 login_user(user, remember=form.remember_me.data)
-                from flask import session
-                s = session
-                # return redirect(url_for('auth.login'))
-                return url_for('devices.devices_list')
+                return url_for('map.devices_on_map')
             else:
-                return {'message': 'not'}
+                return ajax_response(422, message='Incorrect username or password. ')
 
     return render_template('auth/login.html', title='Sign In', form=form)
-
-
 
 
 @auth.route('/auth/logout')
@@ -110,9 +98,4 @@ def save_auth_key(openid, key, expire):
 
 
 if __name__ == '__main__':
-    redis = Redis(host='183.230.40.230', port=6379, db=0)
-    redis.set('name', '0nndk')
-    redis.expire('name', 20)
-    print redis.get('name')
-
-
+    pass

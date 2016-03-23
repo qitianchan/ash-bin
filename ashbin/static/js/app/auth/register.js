@@ -23,7 +23,7 @@ var Script = function(){
                 }
             });
         }
-    });
+});
     $(document).ready(function() {
 
     $("#signupForm").validate({

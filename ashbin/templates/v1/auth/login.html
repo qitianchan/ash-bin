@@ -29,7 +29,7 @@
             <img src="{{ url_for('static', filename='images/login-logo.png') }}" alt=""/>
         </div>
         <div class="login-wrap">
-            {{ form.username(class_="form-control",autofocus=true, required=true, placeholder=form.username.label.text) }}
+            {{ form.username(class_="form-control",id='username',autofocus=true, required=true, placeholder=form.username.label.text) }}
             {{ form.password(class_="form-control", required=true, placeholder=form.password.label.text) }}
 
             <!--<input type="text" class="form-control" placeholder="User ID" autofocus>-->

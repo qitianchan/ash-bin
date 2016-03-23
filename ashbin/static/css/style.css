@@ -166,6 +166,12 @@ hr {
     text-decoration: underline;
 }
 
+.form-signin label.error {
+    margin: 5px 0;
+    width: auto;
+    color: #FF6C60;
+}
+
 .login-wrap {
     padding: 20px;
     position: relative;
