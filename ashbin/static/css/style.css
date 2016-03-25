@@ -12,7 +12,7 @@ Author: ThemeBucket
 
 body {
     background: #424f63;
-    font-family: 'Open Sans', sans-serif;
+    /*font-family: 'Open Sans', sans-serif;*/
     color: #7a7676;
     line-height: 20px;
     overflow-x: hidden;
@@ -20,7 +20,7 @@ body {
 }
 
 input, select, textarea {
-    font-family: 'Open Sans', sans-serif;
+    /*font-family: 'Open Sans', sans-serif;*/
     color: #767676;
 }
 
@@ -37,7 +37,7 @@ a:focus, a:active, a:hover {
 }
 
 h1, h2, h3, h4, h5 {
-    font-family: 'Open Sans', sans-serif;
+    /*font-family: 'Open Sans', sans-serif;*/
 }
 
 .mtop10 {
@@ -95,7 +95,7 @@ hr {
     font-weight: normal;
     color: #fff;
     font-weight: normal;
-    font-family: 'Open Sans', sans-serif;
+    /*font-family: 'Open Sans', sans-serif;*/
     position: absolute;
     bottom: -50px;
     width: 100%;
@@ -135,7 +135,7 @@ hr {
     color: #fff;
     text-transform: uppercase;
     font-weight: normal;
-    font-family: 'Open Sans', sans-serif;
+    /*font-family: 'Open Sans', sans-serif;*/
     margin: 20px 0 5px;
     padding: 5px;
     -webkit-transition: all 0.3s;
@@ -2800,6 +2800,11 @@ div.tagsinput span.tag a {
 /*-------------------------------------
      GOOGLE MAPS & VECTOR MAPS STYLE
 -------------------------------------*/
+.devices-map-container {
+    width: 100% !important;
+    height: 800px !important;
+    /*box-shadow: rgba(0, 0, 0, 0.0980392) 0 1px 1px;*/
+}
 .gmaps {
     height: 350px;
     width: 100%;

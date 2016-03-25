@@ -1,4 +1,4 @@
-<!doctype html>
+ <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -17,6 +17,7 @@
         <!--common-->
         <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
         <link href="{{ url_for('static', filename='css/style-responsive.css')}}" rel="stylesheet">
+        <script type="text/javascript" src="{{url_for('static', filename='js/jquery.min.js')}}"></script>
 
 
 
@@ -408,7 +409,7 @@
 
         {# standard javascript libs #}
         {% block javascript %}
-        <script src="{{ url_for('static', filename='js/jquery-1.10.2.min.js') }}"></script>
+        <!--<script src="{{ url_for('static', filename='js/jquery-1.10.2.min.js') }}"></script>-->
         <script src="{{ url_for('static', filename='js/jquery-ui-1.9.2.custom.min.js') }}"></script>
         <script src="{{ url_for('static', filename='js/jquery-migrate-1.2.1.min.js') }}"></script>
         <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>

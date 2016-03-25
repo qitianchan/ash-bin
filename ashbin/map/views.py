@@ -14,6 +14,8 @@ from datetime import timedelta
 from flask_socketio import emit
 from threading import Thread
 from flask import jsonify
+from ashbin.configs.default import MARK_BLUE, MARK_RED, CRITICAL_POINT
+
 map = Blueprint('map', __name__, template_folder='templates')
 
 
@@ -34,13 +36,23 @@ def devices_lnglat():
     for device in devices:
         d = {}
         d['device_id'] = device.id
+        d['eui'] = device.eui
         d['lng'] = device.longitude
         d['lat'] = device.latitude
         device_data = device.datas.order_by(desc('create_time')).first()
-        if device_data:
-            d['occupancy'] = device.datas.order_by(desc('create_time')).first().occupancy
+        d['create_time'] = getattr(device_data, 'create_time', '--')
+        d['occupancy'] = getattr(device_data, 'occupancy', '--')
+        d['temperature'] = getattr(device_data, 'temperature', '--')
+        d['electric_level'] = getattr(device_data, 'electric_level', None)
+        if d['electric_level'] and d['electric_level'] >=7:
+            d['battery'] = '100'
         else:
-            d['occupancy'] = 0
+            d['battery'] = str(d['electric_level'] * 15)
+
+        if d['occupancy'] != '--' and d['occupancy'] >= CRITICAL_POINT:
+            d['icon'] = url_for('static', filename=MARK_RED)
+        else:
+            d['icon'] = url_for('static', filename=MARK_BLUE)
         data.append(d)
     return jsonify({'data': data})
 
@@ -62,3 +74,8 @@ def device_data():
             data['create_time'] = d.create_time.strftime('%m-%d %H:%M')
             res.append(data)
     return jsonify({'data': res})
+
+@map.route('/index')
+def index():
+    return render_template('index.html')
+

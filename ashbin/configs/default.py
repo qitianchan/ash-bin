@@ -135,3 +135,8 @@ class DefaultConfig(object):
     OURSELF_TOKEN = 'oIx1AmAxAQwIxFdmCOwrBg=='
     OURSELF_HOST = '183.230.40.231'
     OURSELF_PORT = 8100
+
+# const
+MARK_BLUE = 'images/mark_blue.png'
+MARK_RED = 'images/mark_red.png'
+CRITICAL_POINT = 80
