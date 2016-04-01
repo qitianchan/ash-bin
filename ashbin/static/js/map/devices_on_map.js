@@ -58,18 +58,6 @@ $(document).ready(function(){
                 });
 
 
-                //markers.forEach(function(marker) {
-                //    temp = marker;
-                //    var temp_marker = new AMap.Marker({
-                //        map: map,
-                //        icon: marker.icon,
-                //        position: [marker.position[0], marker.position[1]],
-                //        offset: new AMap.Pixel(-12, -36)
-                //    });
-                //    device_id = marker.device_id;
-                //    AMap.event.addListener(temp_marker, 'click', _onClick, {device_id:device_id})
-                //});
-                //
                 addCluster(markers);
             }
         }
@@ -79,17 +67,6 @@ $(document).ready(function(){
         infoWindow.setContent(e.target.content);
         infoWindow.open(map, e.target.getPosition());
     }
-    //实例化信息窗体
-    //var title = '方恒假日酒店<span style="font-size:11px;color:#F00;">价格:318</span>',
-    //    content = [];
-    //content.push("<img src='http://tpc.googlesyndication.com/simgad/5843493769827749134'>地址：北京市朝阳区阜通东大街6号院3号楼东北8.3公里");
-    //content.push("电话：010-64733333");
-    //content.push("<a href='#'>详细信息</a>");
-    //var infoWindow = new AMap.InfoWindow({
-    //    isCustom: true,  //使用自定义窗体
-    //    content: createInfoWindow(title, content.join("<br/>")),
-    //    offset: new AMap.Pixel(16, -45)
-    //});
 
     //构建自定义信息窗体
     function createInfoWindow(title, content) {

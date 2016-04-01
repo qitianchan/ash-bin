@@ -75,6 +75,7 @@ def device_data():
             res.append(data)
     return jsonify({'data': res})
 
+
 @map.route('/index')
 def index():
     return render_template('index.html')
