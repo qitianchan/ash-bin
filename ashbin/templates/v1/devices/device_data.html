@@ -1,8 +1,28 @@
 {% extends "layout.html" %}
 {% block container %}
 
-    <div class="container">
+<div class="wrapper">
+    <div class="row">
+        <div class="col-lg-8">
+        <div class="panel">
+            <div class="panel-body">
+                <div id="map-container"></div>
+            </div>
+        </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="panel">
+                <div class="panel-body">
 
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+    <div class="container">
+        
         <div id="chart" class="device-data-chart"></div>
         <div class="panel panel-default">
             <div id="device-mac" class="panel-heading"> <h3>{{device.mac}}</h3></div>
