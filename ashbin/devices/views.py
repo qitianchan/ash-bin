@@ -137,3 +137,36 @@ def device_ajax_data(id):
             res.append(data)
 
     return jsonify({'data': res})
+
+
+@devices.route('/device/<id>/data/resource', methods=['GET', 'POST'])
+@login_required
+def device_resource(id):
+    if request.method == 'GET':
+        data = {}
+        device = Device.get(id)
+        if device:
+            data['lng'] = device.longitude
+            data['lat'] = device.latitude
+            data['mac'] = device.mac
+            data['eui'] = device.eui
+            d = device.datas.order_by(desc(Data.create_time)).first()
+            if d:
+                data['occupancy'] = d.occupancy
+                data['temperature'] = d.temperature
+                if d.electric_level >= 7:
+                    battery = 100
+                else:
+                    battery = 15 * d.electric_level
+                data['electric_level'] = battery
+                data['last_update'] = d.create_time
+            else:
+                data['occupancy'] = '-'
+                data['temperature'] = '-'
+                data['electric_level'] = '-'
+                data['last_update'] = '-'
+
+        return jsonify(data)
+
+
+

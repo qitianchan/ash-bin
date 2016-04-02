@@ -2,6 +2,28 @@
  * Created by qitian on 2016/2/1.
  */
 $(document).ready(function(){
+    var ajax = $.ajax({
+        url: window.location.href + '/resource',
+        type: 'get',
+        datatype: 'json',
+        success: function(res) {
+            var map = new AMap.Map('map-container', {
+                resizeEnable: true,
+                center: [res.lng, res.lat],
+                zoom: 5
+            });
+            var marker = new AMap.Marker({
+                        map: map,
+                        position: [res.lng, res.lat],
+                        icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
+                        offset: {x: -8,y: -34}
+                    });
+             var newCenter = map.setFitView();
+        }
+
+    });
+
+
     namespace = '/device';
     var myChart = echarts.init(document.getElementById('chart'));
     var date = [];
