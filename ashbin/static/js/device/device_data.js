@@ -2,6 +2,7 @@
  * Created by qitian on 2016/2/1.
  */
 $(document).ready(function(){
+
     var ajax = $.ajax({
         url: window.location.href + '/resource',
         type: 'get',
