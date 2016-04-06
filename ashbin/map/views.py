@@ -44,6 +44,7 @@ def devices_lnglat():
         d['occupancy'] = getattr(device_data, 'occupancy', '--')
         d['temperature'] = getattr(device_data, 'temperature', '--')
         d['electric_level'] = getattr(device_data, 'electric_level', None)
+        d['detail'] = url_for('devices.device_profile_data', id=device.id)
         if d['electric_level'] and d['electric_level'] >=7:
             d['battery'] = '100'
         else:

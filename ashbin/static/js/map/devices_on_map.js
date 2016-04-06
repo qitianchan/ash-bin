@@ -51,7 +51,7 @@ $(document).ready(function(){
                     content.push("Filling Level: " + item.occupancy + '%');
                     content.push("Battery Level: " + item.battery + '%');
                     content.push("Temperature: " + item.temperature + '&#8451');
-                    content.push("<a href='#'>More Information</a>");
+                    content.push("<a href=" + item.detail + ">More Information</a>");
                     marker.content = createInfoWindow(title, content.join("<br/>"));
                     marker.on('click', markerClick);
                     marker.emit('click', {target: marker});
