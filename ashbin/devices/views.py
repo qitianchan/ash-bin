@@ -203,9 +203,14 @@ def get_device_info(device_id):
                 battery = 15 * d.electric_level
             data['electric_level'] = battery
             data['last_update'] = d.create_time
+            data['last_update_date'] = d.create_time.strftime('$Y-$m-%d')
+            data['last_update_time'] = d.create_time.strftime('%H:%M:%S')
         else:
             data['occupancy'] = '-'
             data['temperature'] = '-'
             data['electric_level'] = '-'
             data['last_update'] = '-'
+            data['last_update_date'] = '-'
+            data['last_update_time'] = '-'
+
     return data

@@ -9,11 +9,11 @@ from ashbin.garbage_cans.model import GarbageCan
 
 
 class DeviceProfileForm(Form):
-    mac = StringField(u'硬件地址', validators=[DataRequired()])
+    mac = StringField(u'MAC', validators=[DataRequired()])
     eui = StringField(u'EUI', validators=[DataRequired()])
-    garbage_can = SelectField(u'垃圾桶类型')
-    longitude = FloatField(u'经度')
-    latitude = FloatField(u'纬度')
+    garbage_can = SelectField(u'garbage can type')
+    longitude = FloatField(u'longitude')
+    latitude = FloatField(u'latitude')
 
     def save_form(self, device):
         if isinstance(device, Device):

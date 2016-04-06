@@ -21,8 +21,12 @@
                         <div class="row"><b>Temperature: </b>{{ device.temperature }}&#8451</div>
                         <div class="row"><b>Fill Level: </b>{{ device.occupancy }}%</div>
                         <div class="row"><b>Battery Level: </b>{{ device.electric_level }}%</div>
-                        <div class="row"><b>Last Update Date: </b>{{ device.last_update.strftime("%Y-%m-%d") }}</div>
-                        <div class="row"><b>Last Update Time: </b>{{ device.last_update.strftime("%H:%M:%S") }}</div>
+                        <div class="row"><b>Last Update Date: </b>
+                        {{ device.last_update_date }}
+                        </div>
+                        <div class="row"><b>Last Update Time: </b>
+                            {{ device.last_update_time }}
+                        </div>
                         <div class="row"><button class="btn btn-primary" id="edit-device-info"><i class="fa fa-edit"></i><span> Edit</span></button></div>
                     </div>  <!-- end device info -->
 

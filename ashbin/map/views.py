@@ -45,11 +45,13 @@ def devices_lnglat():
         d['temperature'] = getattr(device_data, 'temperature', '--')
         d['electric_level'] = getattr(device_data, 'electric_level', None)
         d['detail'] = url_for('devices.device_profile_data', id=device.id)
-        if d['electric_level'] and d['electric_level'] >=7:
-            d['battery'] = '100'
+        if d['electric_level']:
+            if d['electric_level'] >= 7:
+                d['battery'] = '100'
+            else:
+                d['battery'] = str(d['electric_level'] * 15)
         else:
-            d['battery'] = str(d['electric_level'] * 15)
-
+            d['battery'] = '--'
         if d['occupancy'] != '--' and d['occupancy'] >= CRITICAL_POINT:
             d['icon'] = url_for('static', filename=MARK_RED)
         else:
