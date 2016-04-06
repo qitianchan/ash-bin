@@ -73,7 +73,7 @@ class Data(db.Model):
     @classmethod
     def get_gdatas(cls, user, device, page=1, per_page=15):
         if user.is_authenticated():
-            return device.datas.order_by(desc(cls.create_time)).paginate(page, per_page, True).items
+            return device.datas.filter(cls.create_time ).order_by(desc(cls.create_time)).paginate(page, per_page, True).items
 
     @classmethod
     def get_datas_in_date(cls, device_id, limit_date):

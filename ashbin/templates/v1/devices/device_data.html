@@ -10,56 +10,111 @@
             </div>
         </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-4" >
             <div class="panel">
                 <div class="panel-body">
+                    <div class="device-info">
+                        <div class="row"><b>MAC: </b>{{ device.mac }}</div>
+                        <div class="row"><b>EUI: </b>{{ device.eui }}</div>
+                        <div class="row"><b>Longitude: </b>{{ device.lng }}</div>
+                        <div class="row"><b>Latitude: </b>{{ device.lat }}</div>
+                        <div class="row"><b>Temperature: </b>{{ device.temperature }}&#8451</div>
+                        <div class="row"><b>Fill Level: </b>{{ device.occupancy }}%</div>
+                        <div class="row"><b>Battery Level: </b>{{ device.electric_level }}%</div>
+                        <div class="row"><b>Last Update Date: </b>{{ device.last_update.strftime("%Y-%m-%d") }}</div>
+                        <div class="row"><b>Last Update Time: </b>{{ device.last_update.strftime("%H:%M:%S") }}</div>
+                        <div class="row"><button class="btn btn-primary" id="edit-device-info"><i class="fa fa-edit"></i><span> Edit</span></button></div>
+                    </div>  <!-- end device info -->
 
                 </div>
             </div>
-        </div>
-    </div>
+        </div>  <!-- End device info column -->
+    </div> <!-- / row -->
 
+    <!-- data chart -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="chart">
+                        <div class="chart-body" id="fill-level"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  <!-- /fill level -->
+    <!-- temperature -->
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="chart">
+                        <div class="chart-body" id="temperature"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="chart">
+                        <div class="chart-body" id="battery-level"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  <!-- /temperature -->
+
+</div> <!-- /wrapper -->
+<div class="wrapper">
+ <div class="row">
+    <div class="col-sm-12">
+    <section class="panel">
+    <header class="panel-heading">
+        {{ device.eui }}
+        <span class="tools pull-right">
+            <a href="javascript:;" class="fa fa-chevron-down"></a>
+            <!--<a href="javascript:;" class="fa fa-times"></a>-->
+         </span>
+    </header>
+    <div class="panel-body">
+    <div class="adv-table editable-table ">
+
+    <table class="table table-striped table-hover table-bordered" id="data-table">
+        <thead>
+         <tr>
+            <th>Update Time</th>
+            <th>Fill Level</th>
+            <th>Temperature</th>
+            <th>Battery</th>
+        </tr>
+        </thead>  <!-- end device table thread -->
+        <tbody>
+        {% for data in datas %}
+        <tr>
+            <td>{{ data['create_time'].strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            <td>{{ data['occupancy'] }} %</td>
+            <td>{{ data['temperature'] }} ℃</td>
+            <td>{{ data['electric_level'] }} %</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+    </div>
+    </div>
+    </section>
+    </div>
+    </div>
 </div>
 
-    <div class="container">
-        
-        <div id="chart" class="device-data-chart"></div>
-        <div class="panel panel-default">
-            <div id="device-mac" class="panel-heading"> <h3>{{device.mac}}</h3></div>
-            <div class="panel-body">
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>时间</th>
-                        <th>垃圾占用率</th>
-                        <th>垃圾桶温度</th>
-                        <th>设备电量</th>
-                    </tr>
-                </thead>
-                <tbody id="device-data">
-                    {% for data in datas %}
-                    <tr>
-                        <td>{{ data['create_time'].strftime('%Y-%m-%d %H:%M:%S') }}</td>
-                        <td>{{ data['occupancy'] }} %</td>
-                        <td>{{ data['temperature'] }} ℃</td>
-                        <td>{{ data['electric_level'] }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-
-                </table>
-                </div>
-
-            </div>
-            </div>
-        </div>
-          <!-- 分頁-->
-          {{ pagination.links }}
 {% endblock %}
 {% block scripts %}}
 <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
-<script src="{{ url_for('static', filename='js/device/device_data.js') }}"></script>
+<script src="{{ url_for('static', filename='js/app/device/device_data.js') }}"></script>
 <script src="{{ url_for('static', filename='js/echarts.min.js') }}"></script>
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+<!--data table-->
+<script type="text/javascript" src="{{ url_for('static', filename='js/data-tables/jquery.dataTables.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/data-tables/DT_bootstrap.js') }}"></script>
+
 {% endblock %}

@@ -38,7 +38,11 @@
 {% endblock %}
 {% block scripts %}}
 <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
-<script src="{{ url_for('static', filename='js/device/device_data.js') }}"></script>
+<script src="{{ url_for('static', filename='js/app/device/device_data.js') }}"></script>
 <script src="{{ url_for('static', filename='js/echarts.min.js') }}"></script>
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+<!--data table-->
+<script type="text/javascript" src="{{ url_for('static', filename='js/data-tables/jquery.dataTables.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/data-tables/DT_bootstrap.js') }}"></script>
+
 {% endblock %}

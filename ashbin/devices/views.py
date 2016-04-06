@@ -111,10 +111,19 @@ def device_profile_data(id):
     device = Device.get(id)
     if device:
         # datas = device.datas.order_by(desc(cls.create_time)).paginate(page, per_page, True).items
-        datas = Data.get_gdatas(current_user, device)
+        one_month_ago = datetime.now() - timedelta(days=30)
+        datas = Data.get_datas_in_date(id, one_month_ago)
+        for d in datas:
+            if d.electric_level >= 7:
+                d.electric_level = 100
+            else:
+                d.electric_level = d.electric_level * 15
+
         count = len(datas)
         pagination = Pagination(page=page, per_page=15, total=count, css_framework='bootstrap3',
                                 search=search, record_name='devices')
+
+        device = get_device_info(id)
 
         return render_template('devices/device_data.html', datas=datas, device=device, pagination=pagination)
     else:
@@ -132,8 +141,13 @@ def device_ajax_data(id):
             data = dict()
             data['occupancy'] = d.occupancy
             data['temperature'] = d.temperature
-            data['electric_level'] = d.electric_level
-            data['create_time'] = d.create_time.strftime('%m-%d %H:%M')
+            battery = 0
+            if d.electric_level >= 7:
+                battery = 100
+            else:
+                battery = d.electric_level * 15
+            data['electric_level'] = battery
+            data['create_time'] = d.create_time.strftime('%y/%m/%d %H:%M')
             res.append(data)
 
     return jsonify({'data': res})
@@ -170,3 +184,28 @@ def device_resource(id):
 
 
 
+
+def get_device_info(device_id):
+    data = {}
+    device = Device.get(int(device_id))
+    if device:
+        data['lng'] = device.longitude
+        data['lat'] = device.latitude
+        data['mac'] = device.mac
+        data['eui'] = device.eui
+        d = device.datas.order_by(desc(Data.create_time)).first()
+        if d:
+            data['occupancy'] = d.occupancy
+            data['temperature'] = d.temperature
+            if d.electric_level >= 7:
+                battery = 100
+            else:
+                battery = 15 * d.electric_level
+            data['electric_level'] = battery
+            data['last_update'] = d.create_time
+        else:
+            data['occupancy'] = '-'
+            data['temperature'] = '-'
+            data['electric_level'] = '-'
+            data['last_update'] = '-'
+    return data

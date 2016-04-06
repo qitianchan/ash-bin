@@ -5386,3 +5386,28 @@ ul.iconic-list li a:hover, ul.iconic-list li.active a {
     margin-bottom: 0;
     padding-bottom: 0;
 }
+
+.device-info {
+    background: #EFF0F4;
+    border-radius: 4px;
+    padding: 12px 4px;
+}
+
+.device-info .row {
+    padding: 8px 0 8px 30px;
+}
+
+.device-info .btn {
+    /*-webkit-border-radius:0;*/
+    /*-moz-border-radius:0;*/
+    /*border-radius: 0;*/
+}
+
+.chart {
+    height: 400px;
+    background: #eff0f4;
+}
+.chart .chart-body {
+    height: 400px;
+    width: 100%;
+}

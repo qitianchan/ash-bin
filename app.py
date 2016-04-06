@@ -138,13 +138,6 @@ def init_app(app):
             raise e
 
 
-@socketio.on('test', namespace='/device')
-def test_message(message):
-    session['receive_count'] = session.get('receive_count', 0) + 1
-    print(u'接收到的信息：%s' % message['data'])
-    emit('my response',
-         {'data': message['data'], 'count': session['receive_count']})
-
 
 app = create_app()
 
