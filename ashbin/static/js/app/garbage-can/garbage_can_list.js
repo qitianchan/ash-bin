@@ -2,26 +2,6 @@
  * Created by admin on 2016/3/30.
  */
 $(document).ready(function() {
-    $('.delete').click(function(event){
-        if(confirm('Sure to Delete?')){
-            var deviceId = $(this).data('device-id');
-            var url = $(this).data('href');
-            var tdDom = $(this).parent().parent();
-            $.ajax({
-                url: url,
-                type: 'delete',
-                success: function(res){
-                    tdDom.remove();
-                    console.log('delete success')
-                },
-                error: function(res){
-                    console.log('delete failed')
-                }
-            })
-        }
-        console.log(deviceId)
-    });
-    var resource_url = window.location.href + '/resource';
     var oTable = $('#deviceTable').dataTable({
                 "aLengthMenu": [
                     [5, 15, 20, -1],

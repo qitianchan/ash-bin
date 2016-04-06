@@ -74,6 +74,7 @@
             <ul class="nav nav-pills nav-stacked custom-nav">
                 <li><a href="{{url_for('map.devices_on_map')}}"><i class="fa fa-map-marker"></i> <span>Map</span></a>
                 <li><a href="{{url_for('devices.devices_list')}}"><i class="fa fa-list"></i> <span>Devices</span></a></li>
+                <li><a href="{{url_for('garbage_can.garbage_can_list')}}"><i class="fa fa-trash-o"></i> <span>Garbage Cans</span></a></li>
 
             </ul>
             <!--sidebar nav end-->
@@ -317,6 +318,9 @@
         <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
         <script src="{{ url_for('static', filename='js/modernizr.min.js') }}"></script>
         <script src="{{ url_for('static', filename='js/jquery.nicescroll.js') }}"></script>
+        <!--data table-->
+        <script type="text/javascript" src="{{ url_for('static', filename='js/data-tables/jquery.dataTables.js')}}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/data-tables/DT_bootstrap.js') }}"></script>
 
         <!--easy pie chart-->
         <script src="{{ url_for('static', filename='js/easypiechart/jquery.easypiechart.js') }}"></script>

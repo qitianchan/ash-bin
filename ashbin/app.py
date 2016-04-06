@@ -11,7 +11,6 @@ from ashbin.extensions import csrf, redis_store, admin, db
 from flask_admin.contrib.sqla import ModelView
 from wtforms.fields import SelectField
 from ashbin.devices.views import devices
-from ashbin.new_theme.views import theme
 from ashbin.garbage_cans.views import garbage_can
 from ashbin.map.views import map
 import websocket

@@ -27,7 +27,9 @@
                         <div class="row"><b>Last Update Time: </b>
                             {{ device.last_update_time }}
                         </div>
-                        <div class="row"><button class="btn btn-primary" id="edit-device-info"><i class="fa fa-edit"></i><span> Edit</span></button></div>
+                        <div class="row">
+                            <a href="{{url_for('devices.device_profile', device_id=device.device_id) }}" class="btn btn-primary" id="edit-device-info"><i class="fa fa-edit"></i><span> Edit</span> </a>
+                            <button class="btn btn-danger" style="margin-left: 8px;" id="delete-device-info"><i class="fa fa-trash-o"></i><span> Delete</span></button></div>
                     </div>  <!-- end device info -->
 
                 </div>

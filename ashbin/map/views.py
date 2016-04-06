@@ -77,9 +77,3 @@ def device_data():
             data['create_time'] = d.create_time.strftime('%m-%d %H:%M')
             res.append(data)
     return jsonify({'data': res})
-
-
-@map.route('/index')
-def index():
-    return render_template('index.html')
-

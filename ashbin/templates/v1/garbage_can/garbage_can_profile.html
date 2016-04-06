@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block container %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <form action="" class="form-horizontal" method="post">
+                {{ form.csrf_token }}
+                <fieldset id="service_profile_fieldset">
+                    <div class="form-group">
+                        <label class="col-sm-2 " for="mac">垃圾桶类型</label>
+                        <div class="col-sm-10">
+                            {{ form.type(id='type', class='form-control', placeholder=form.type.label.text,
+                            value= can.type or '')}}
+                        </div>
+                    </div> <!--/form-group -->
+
+                    <div class="form-group">
+                        <label class="col-sm-2" for="bottom_height">底部高度</label>
+                        <div class="col-sm-10">
+                            {{ form.bottom_height(id='bottom_height', class='form-control', placeholder=form.bottom_height.label.text,
+                            value= can.bottom_height or '')}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2" for="top_height">顶部高度</label>
+                        <div class="col-sm-10">
+                            {{ form.top_height(id='top_height', class='form-control', placeholder=form.top_height.label.text,
+                            value= can.top_height or '')}}
+                        </div>
+                    </div>
+
+
+                    <div class="right">
+                        <button type="submit" class="btn btn-primary" role="button">保存</button>
+                    </div>
+                </fieldset>
+
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}}
+<script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=134542f782807947857e954af5848639"></script>
+<script src="{{ url_for('static', filename='js/garbage_profile.js') }}"></script>
+<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+{% endblock %}

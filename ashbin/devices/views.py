@@ -67,7 +67,6 @@ def devices_list():
         abort(404)
 
 
-
 @devices.route('/device_profile/<device_id>', methods=['GET', 'POST'])
 @login_required
 def device_profile(device_id):
@@ -129,6 +128,7 @@ def device_profile_data(id):
     else:
         abort(404)
 
+
 @devices.route('/device/<id>/data_one_month', methods=['GET', 'POST'])
 @login_required
 def device_ajax_data(id):
@@ -183,12 +183,27 @@ def device_resource(id):
         return jsonify(data)
 
 
+@devices.route('/<device_id>/delete', methods=['DELETE'])
+@login_required
+def device_delete(device_id):
+    device = Device.get(device_id)
+    if device:
+        try:
+            device.delete()
+            return jsonify({'message': 'delete device success'})
+        except Exception as e:
+            res = jsonify({'message': 'delete device error'})
+            res.status_code = 422
+            return res
+
+
 
 
 def get_device_info(device_id):
     data = {}
     device = Device.get(int(device_id))
     if device:
+        data['device_id'] = int(device_id)
         data['lng'] = device.longitude
         data['lat'] = device.latitude
         data['mac'] = device.mac

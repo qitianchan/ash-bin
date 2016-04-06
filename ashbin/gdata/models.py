@@ -10,13 +10,13 @@ from sqlalchemy import and_
 
 class Data(db.Model):
     __tablename__ = 'data'
-    # id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    device_id = db.Column(db.Integer, db.ForeignKey('device.id'), nullable=False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    device_id = db.Column(db.Integer, db.ForeignKey('device.id'))
     data = db.Column(db.VARCHAR(255))
     occupancy = db.Column(db.Integer, default=0)            # 垃圾占用率
     temperature = db.Column(db.Integer)                     # 温度
     electric_level = db.Column(db.Integer)                  # 电量等级
-    create_time = db.Column(db.DateTime, primary_key=True)
+    create_time = db.Column(db.DateTime)
 
     def __repr__(self):
         """Set to a unique key specific to the object in the database.
