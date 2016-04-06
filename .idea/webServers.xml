@@ -3,14 +3,14 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="248692e4-c632-4fee-974c-b318b715579d" name="server" url="http://183.230.40.230">
-        <fileTransfer host="183.230.40.230" port="22" rootFolder="/www" accessType="SFTP" password="dfc9dfdbdfdedfeadff9dff8dffcdff1df98df9adf9bdf9cdff7" username="chenqitian">
+        <fileTransfer host="183.230.40.230" port="22" accessType="SFTP" password="dfc9dfdbdfdedfeadff9dff8dffcdff1df98df9adf9bdf9cdff7" username="chenqitian">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>
         </fileTransfer>
       </webServer>
-      <webServer id="d04ebdd7-6421-4862-841a-c5b8a8ec4291" name="ALL" url="http://183.230.40.230">
-        <fileTransfer host="183.230.40.230" port="22" accessType="SFTP" password="dfc9dfdbdfdedfeadff9dff8dffcdff1df98df9adf9bdf9cdff7" username="chenqitian">
+      <webServer id="31d5ec75-c71c-4b1d-af31-14ebb3bfc7d7" name="Projects" url="http://183.230.40.230">
+        <fileTransfer host="183.230.40.230" port="22" rootFolder="/www" accessType="SFTP" password="dfc9dfdbdfdedfeadff9dff8dffcdff1df98df9adf9bdf9cdff7" username="chenqitian">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>

@@ -2,10 +2,22 @@
  * Created by qitian on 2016/1/27.
  */
 
+var lng = $('#longitude').val();
+var lat = $('#latitude').val();
+if(lng==='' || lat===''){
+    lng = 116.39;
+    lat = 39.9
+}
 var map = new AMap.Map('container',{
-        zoom: 10,
-        center: [116.39,39.9]
-    });
+    zoom: 10,
+    center: [lng, lat]
+});
+var marker = new AMap.Marker({
+                        map: map,
+                        position: [lng, lat],
+                        icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
+                        offset: {x: -8,y: -34}
+                    });
 
 AMap.service(["AMap.PlaceSearch"], function() {
     var placeSearch = new AMap.PlaceSearch({ //构造地点查询类
