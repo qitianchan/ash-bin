@@ -151,5 +151,5 @@ app = create_app()
 if __name__ == '__main__':
     app.debug = True
 
-    socketio.run(app, host='127.0.0.1', port=8099)
+    socketio.run(app, host='127.0.0.1', port=8098)
     # app.run()
