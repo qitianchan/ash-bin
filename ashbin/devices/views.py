@@ -54,7 +54,7 @@ def devices_list():
                 else:
                     battery = 15 * d.electric_level
                 data['electric_level'] = battery
-                data['last_update'] = d.create_time
+                data['last_update'] = d.create_time.strftime('%Y/%m/%d %H:%M:%S')
             else:
                 data['occupancy'] = '-'
                 data['temperature'] = '-'
@@ -195,8 +195,6 @@ def device_delete(device_id):
             res = jsonify({'message': 'delete device error'})
             res.status_code = 422
             return res
-
-
 
 
 def get_device_info(device_id):
