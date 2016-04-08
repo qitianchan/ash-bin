@@ -75,6 +75,7 @@ var EditableTable = function () {
 
             var nEditing = null;
 
+
             $('#cans_new').click(function (e) {
                 e.preventDefault();
                 var aiNew = oTable.fnAddData(['', '', '',
