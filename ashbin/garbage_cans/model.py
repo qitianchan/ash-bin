@@ -32,6 +32,8 @@ class GarbageCan(db.Model):
         :param user:
         :return:
         """
+        if not self.user_id:
+            self.user_id = current_user.id
         db.session.add(self)
         db.session.commit()
         return self

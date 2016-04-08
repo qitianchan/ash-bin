@@ -85,19 +85,33 @@ var EditableTable = function () {
                 nEditing = nRow;
             });
 
-            $('#editable-sample a.delete').live('click', function (e) {
+            $('#cans-table a.delete').live('click', function (e) {
                 e.preventDefault();
 
                 if (confirm("Are you sure to delete this row ?") == false) {
                     return;
                 }
-
+                var url = window.location.href;
+                url = url.slice(0, url.lastIndexOf('/')) + '/delete';
+                var ajaxType = 'delete';
                 var nRow = $(this).parents('tr')[0];
-                oTable.fnDeleteRow(nRow);
-                alert("Deleted! Do not forget to do some ajax to sync with backend :)");
+                $.ajax({
+                    url: url,
+                    type: ajaxType,
+                    data: {can_id: $(nRow).data('can-id')},
+                    success: function(res) {
+                        oTable.fnDeleteRow(nRow);
+                        console.log('delete success')
+                    },
+                    error: function(res) {
+                        console.log('delete failed')
+                    }
+
+                });
+
             });
 
-            $('#editable-sample a.cancel').live('click', function (e) {
+            $('#cans-table a.cancel').live('click', function (e) {
                 e.preventDefault();
                 if ($(this).attr("data-mode") == "new") {
                     var nRow = $(this).parents('tr')[0];
@@ -108,7 +122,7 @@ var EditableTable = function () {
                 }
             });
 
-            $('#editable-sample a.edit').live('click', function (e) {
+            $('#cans-table a.edit').live('click', function (e) {
                 e.preventDefault();
 
                 /* Get the row as a parent of the link that was clicked on */
@@ -121,9 +135,37 @@ var EditableTable = function () {
                     nEditing = nRow;
                 } else if (nEditing == nRow && this.innerHTML == "Save") {
                     /* Editing this row and want to save it */
-                    saveRow(oTable, nEditing);
-                    nEditing = null;
-                    alert("Updated! Do not forget to do some ajax to sync with backend :)");
+                    var data = {};
+                    var jqInputs = $('input', nRow);
+                    data.type = jqInputs[0].value;
+                    data.bottom = jqInputs[1].value;
+                    data.top = jqInputs[2].value;
+                    var url = window.location.href;
+                    url = url.substr(0, url.lastIndexOf('/')) + '/edit';
+                    var ajaxType = 'post';
+                    // update row
+                    if($(nRow).data('can-id') !== undefined) {
+                        data.can_id = $(nRow).data('can-id');
+                        ajaxType = 'update';
+                    }
+
+                    $.ajax({
+                        url: url,
+                        type: ajaxType,
+                        data: data,
+                        success: function(res){
+                            $(nRow).data('can-id', res.can_id);
+                            saveRow(oTable, nRow);
+                            nEditing = null;
+                          console.log('Add new garbage can success')
+                        },
+                        error: function(){
+                            console.log('failed')
+                        }
+                    });
+
+                    //saveRow(oTable, nEditing);
+                    //nEditing = null;
                 } else {
                     /* No edit in progress - let's start one */
                     editRow(oTable, nRow);
@@ -131,7 +173,6 @@ var EditableTable = function () {
                 }
             });
         }
-
     };
 
 }();

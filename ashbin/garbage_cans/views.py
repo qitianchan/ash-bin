@@ -1,18 +1,19 @@
 # -*- coding: utf-8 -*-
 __author__ = 'qitian'
 
-from flask import Blueprint, redirect, request, url_for, render_template, abort, flash
+from flask import Blueprint, redirect, request, url_for, render_template, abort, flash, jsonify
 from flask_login import login_required, current_user
 from jinja2 import TemplateNotFound
 from ashbin.garbage_cans.model import GarbageCan
 from flask_paginate import Pagination
 from .forms import GarbageCanForm
+from ashbin.extensions import csrf
 
 garbage_can = Blueprint('garbage_can', __name__, template_folder='templates')
 
 # services list
-@garbage_can.route('/garbage_can_list')
-@login_required
+@garbage_can.route('/garbage_can_list', methods=['GET', 'POST'])
+# @login_required
 def garbage_can_list():
     try:
         search = False
@@ -65,20 +66,58 @@ def garbage_can_profile(can_id):
 
     return render_template('garbage_can/garbage_can_profile.html', form=form, can=can)
 
-#
-# @service.route('/service/<id>/delete', methods=['GET', 'POST'])
-# @login_required
-# def delete_service(id):
-#     service = Service.get(id)
-#     if service is None:
-#         flash(u'不存在该服务', category='danger')
-#         return redirect(url_for('service.service_list'))
-#
-#     try:
-#         service.delete()
-#     except IntegrityError:
-#         flash(u'删除失败，存在引用到该服务的记录', 'danger')
-#     except Exception:
-#         flash(u'删除失败', category='danger')
-#
-#     return redirect(url_for('service.service_list'))
+
+@garbage_can.route('/edit', methods=['POST', 'UPDATE'])
+@login_required
+@csrf.exempt
+def edit_can():
+    data = request.form
+    try:
+        try:
+            bottom = int(data['bottom'])
+            top = int(data['top'])
+        except ValueError as e:
+            res = {'message': 'Value error'}
+            res.status_code = 422
+            return res
+
+        type = data['type']
+
+        if request.method == 'UPDATE':
+            can_id = int(data['can_id'])
+            can = GarbageCan.get(can_id)
+        elif request.method == 'POST':
+            can = GarbageCan()
+
+        can.type = type
+        can.bottom_height = bottom
+        can.top_height = top
+        try:
+            can.save()
+            return jsonify({'message': 'Update success', 'can_id': can.id})
+        except Exception as e:
+            res = jsonify({'message': 'Update failed'})
+            res.status_code = 422
+            return res
+    except Exception as e:
+        res = jsonify({'message': e.message})
+        res.status_code = 422
+        return res
+
+
+@garbage_can.route('/delete', methods=['DELETE'])
+@login_required
+@csrf.exempt
+def delete_can():
+    try:
+        can_id = int(request.form['can_id'])
+        can = GarbageCan.get(can_id)
+        if can:
+            can.delete()
+        return jsonify({'message': 'delete success'})
+    except ValueError as e:
+        res = jsonify({'message': 'field can_id value error'})
+        res.status_code = 422
+
+    return jsonify({'message': 'success'})
+
