@@ -135,11 +135,11 @@ def insert_data(cx, data):
             if device_id:
                 if bottom_height and top_height and bottom_height > top_height:
                     info = parse_data(data, bottom_height, top_height)
-                    ins_data = (device_id, data, info[0], info[1], info[2], now)
+                    ins_data = (None, device_id, data, info[0], info[1], info[2], now)
                 else:
-                    ins_data = (device_id, data, 0, 0, 0, now)
+                    ins_data = (None, device_id, data, 0, 0, 0, now)
 
-                cx.execute('insert into data values (?,?,?,?,?,?)', ins_data)
+                cx.execute('insert into data values (?,?,?,?,?,?,?)', ins_data)
                 cx.commit()
 
     # emit new message to web
@@ -186,4 +186,7 @@ def on_msg(ws, message):
     print(message)
 
 if __name__ == '__main__':
+    # cx = sqlite3.connect(DefaultConfig.DATABASE_PATH)
+    # cx.execute('insert into data values (?,?,?,?,?,?,?)', (None, 20, 'sdfa', 12, 12,2, 'hello'))
+    # cx.commit()
     pass
