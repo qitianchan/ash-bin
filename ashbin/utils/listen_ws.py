@@ -79,7 +79,6 @@ class TestNamespace(BaseNamespace):
             cook_rx_message(msg)
             # todo: 处理失败提示
 
-
         def on_enqueued(self):
             print('enqueued')
             print(self)
@@ -126,14 +125,15 @@ def get_info(cx, mac):
 def insert_data(cx, data):
     mac = data[0:8].upper()
     infos = get_info(cx, mac)
+    now = datetime.now()
+
     for res in infos:
         if res:
             device_id = res[0]
             bottom_height = res[1]
             top_height = res[2]
-            now = datetime.now()
             if device_id:
-                if bottom_height and top_height and bottom_height > top_height:
+                if bottom_height and bottom_height > top_height:
                     info = parse_data(data, bottom_height, top_height)
                     ins_data = (None, device_id, data, info[0], info[1], info[2], now)
                 else:
@@ -143,8 +143,8 @@ def insert_data(cx, data):
                 cx.commit()
 
     # emit new message to web
-    socketio.emit(mac, {'occupancy': ins_data[2], 'temperature': ins_data[3],
-                        'electric_level': ins_data[4], 'create_time': now.strftime('%Y-%m-%d %H:%M:%S')},
+    socketio.emit(mac, {'occupancy': ins_data[3], 'temperature': ins_data[4],
+                        'electric_level': ins_data[5], 'create_time': now.strftime('%y/%m/%d %H:%M:%S')},
                   namespace='/device')
 
 
@@ -178,12 +178,15 @@ def parse_data(raw_data, bottom_height, top_height):
 
     temperature = int(raw_data[12:14], 16)
     electric_level = int(raw_data[14:16], 16)
+    if electric_level >= 7:
+        electric_level = 100
+    elif electric_level < 0:
+        electric_level = 0
+    else:
+        electric_level = electric_level * 15
 
     return (occupancy, temperature, electric_level)
 
-
-def on_msg(ws, message):
-    print(message)
 
 if __name__ == '__main__':
     # cx = sqlite3.connect(DefaultConfig.DATABASE_PATH)

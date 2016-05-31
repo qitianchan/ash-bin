@@ -26,7 +26,7 @@
         {{ form.csrf_token }}
         <div class="form-signin-heading text-center">
             <h1 class="sign-title">Sign In</h1>
-            <img src="{{ url_for('static', filename='images/login-logo.png') }}" alt=""/>
+            <!--<img src="{{ url_for('static', filename='images/login-logo.png') }}" alt=""/>-->
         </div>
         <div class="login-wrap">
             {{ form.username(class_="form-control",id='username',autofocus=true, required=true, placeholder=form.username.label.text) }}

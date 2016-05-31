@@ -23,7 +23,7 @@ manager = Manager(app)
 
 @manager.command
 def runserver():
-    socketio.run(app, host='localhost', port=8099)
+    socketio.run(app, host='localhost', port=8098)
 
 @manager.command
 def initdb():

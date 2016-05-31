@@ -131,10 +131,11 @@ class DefaultConfig(object):
     SECRET_KEY = 'ash-bin secret key'
 
     # Ourself Server websocket infomation
-    OURSELF_APP_EUI = 'be000000000000a0'
-    OURSELF_TOKEN = 'oIx1AmAxAQwIxFdmCOwrBg=='
+    OURSELF_APP_EUI = 'BE7A0000000001C0'
+    OURSELF_TOKEN = 'WxwwWkBUdm5jLpDDZbkExw=='
     OURSELF_HOST = '183.230.40.231'
-    OURSELF_PORT = 8100
+    OURSELF_PORT = 8008
+    NAMESPACE_PATH = '/test'
 
 # const
 MARK_BLUE = 'images/mark_blue.png'
